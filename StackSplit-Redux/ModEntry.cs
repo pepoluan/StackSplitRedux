@@ -14,6 +14,7 @@ namespace StackSplitRedux
         internal static StardewModdingAPI.IInputHelper Input { get => Instance.Helper.Input; }
         internal static StardewModdingAPI.Events.IModEvents Events { get => Instance.Helper.Events; }
         internal static StardewModdingAPI.IModRegistry Registry { get => Instance.Helper.ModRegistry; }
+        internal static ModConfig Config;
         #endregion
 
         private static StackSplit StackSplitRedux;
@@ -28,6 +29,7 @@ namespace StackSplitRedux
             if (DetectConflict()) return;
 
             Log.Info($"{this.ModManifest.UniqueID} version {typeof(Mod).Assembly.GetName().Version} (API version {API.Version}) is loading...");
+            Mod.Config = helper.ReadConfig<ModConfig>();
             Mod.StackSplitRedux = new();
             }
 

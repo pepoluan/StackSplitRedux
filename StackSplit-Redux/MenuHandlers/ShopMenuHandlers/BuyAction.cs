@@ -10,17 +10,13 @@ namespace StackSplitRedux.MenuHandlers
     {
     class BuyAction : ShopAction
         {
-        /// <summary>Default amount when shift+right clicking</summary>
-        private const int DEFAULT_SHOP_STACK_AMT = 5;
-
         /// <summary>Constructs an instance.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
         public BuyAction(ShopMenu menu, ISalable item)
             : base(menu, item) {
             // Default amount
-            this.Amount = DEFAULT_SHOP_STACK_AMT;
+            this.Amount = Mod.Config.DefaultShopAmount;
             }
 
         /// <summary>Verifies the conditions to perform te action.</summary>

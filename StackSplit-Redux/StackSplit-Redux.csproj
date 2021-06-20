@@ -69,6 +69,7 @@
     <Compile Include="MenuHandlers\ShopMenuHandlers\SellAction.cs" />
     <Compile Include="MenuHandlers\ShopMenuHandlers\ShopAction.cs" />
     <Compile Include="MenuHandlers\ShopMenuHandlers\ShopMenuHandler.cs" />
+    <Compile Include="ModConfig.cs" />
     <Compile Include="ModEntry.cs" />
     <Compile Include="OtherMods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
