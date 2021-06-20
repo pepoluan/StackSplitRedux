@@ -63,7 +63,7 @@ namespace StackSplitRedux.MenuHandlers
             stackAmount = 0;
 
             // This logic is the same for all the page handlers so we can do it here.
-            this.Inventory.SelectItem(Game1.getMouseX(), Game1.getMouseY());
+            this.Inventory.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
             if (this.Inventory.CanSplitSelectedItem()) {
                 stackAmount = this.Inventory.GetDefaultSplitStackAmount();
 

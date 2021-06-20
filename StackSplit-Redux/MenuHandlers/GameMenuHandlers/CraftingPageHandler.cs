@@ -56,7 +56,7 @@ namespace StackSplitRedux.MenuHandlers
             if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraIems))
                 return EInputHandled.NotHandled;
 
-            this.ClickItemLocation = new Point(Game1.getOldMouseX(), Game1.getOldMouseY());
+            this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
             return EInputHandled.Consumed;
             }
 

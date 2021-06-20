@@ -15,7 +15,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Alternative of OpenSplitMenu which is invoked when the generic inventory handler is clicked.</summary>
         /// <returns>If the input was handled or consumed.</returns>
         protected override EInputHandled InventoryClicked() {
-            this.Inventory.SelectItem(Game1.getMouseX(), Game1.getMouseY());
+            this.Inventory.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
             if (this.Inventory.CanSplitSelectedItem()) {
                 int stackAmount = this.Inventory.GetDefaultSplitStackAmount();
                 this.SplitMenu = new StackSplitMenu(OnStackAmountReceived, stackAmount);

@@ -104,8 +104,12 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Checks if one of the tabs was selected and changes the current tab accordingly.</summary>
         protected override EInputHandled HandleLeftClick() {
             // Check which tab was click and switch to the corresponding handler.
-            int tabIndex = this.Tabs.FindIndex(tab => tab.containsPoint(Game1.getMouseX(), Game1.getMouseY()));
+            var mX = Game1.getMouseX(true);
+            var mY = Game1.getMouseY(true);
+            Log.TraceIfD($"Mouse clicked on ({mX}, {mY})");
+            int tabIndex = this.Tabs.FindIndex(tab => tab.containsPoint(Game1.getMouseX(true), Game1.getMouseY(true)));
             if (tabIndex > INVALID_TAB) {
+                Log.TraceIfD($"Changed tab to {tabIndex}");
                 ChangeTabs(tabIndex);
                 }
             return EInputHandled.NotHandled;
@@ -123,11 +127,13 @@ namespace StackSplitRedux.MenuHandlers
             if (this.PageHandlers.ContainsKey(newTab)) {
                 this.PreviousTab = newTab;
                 this.CurrentPageHandler = this.PageHandlers[newTab];
+                Log.TraceIfD($"Found a handler for tab {newTab} : {this.CurrentPageHandler}");
 
                 var pages = Mod.Reflection.GetField<List<IClickableMenu>>(this.NativeMenu, "pages").GetValue();
                 this.CurrentPageHandler.Open(this.NativeMenu, pages[newTab], this.Inventory);
                 return true;
                 }
+            Log.TraceIfD($"No handler for tab {newTab}");
             return false;
             }
 
