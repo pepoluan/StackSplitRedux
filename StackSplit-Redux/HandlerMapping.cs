@@ -14,10 +14,10 @@ namespace StackSplitRedux
         private static IMenuHandler GetSingleton(Type handlerType) {
             if (!typeof(IMenuHandler).IsAssignableFrom(handlerType))
                 throw new Exception($"{handlerType} does not implement IMenuHandler!");
-            if (HandlerSingletons.TryGetValue(handlerType, out IMenuHandler handler))
-                return handler;
-            handler = (IMenuHandler)Activator.CreateInstance(handlerType);
-            HandlerSingletons[handlerType] = handler;
+            if (!HandlerSingletons.TryGetValue(handlerType, out IMenuHandler handler)) {
+                handler = (IMenuHandler)Activator.CreateInstance(handlerType);
+                HandlerSingletons[handlerType] = handler;
+                }
             return handler;
             }
 
