@@ -6,7 +6,7 @@ using StardewValley.Menus;
 
 namespace StackSplitRedux
     {
-    public partial class StackSplit
+    public class StackSplit
         {
         /// <summary>Are we subscribed to the events listened to while a handler is active.</summary>
         private bool IsSubscribed = false;
