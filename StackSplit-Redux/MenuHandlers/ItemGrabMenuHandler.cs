@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using StardewValley.Menus;
 using StardewValley;
 using System.Diagnostics;
@@ -56,7 +56,7 @@ namespace StackSplitRedux.MenuHandlers
             base.CloseSplitMenu();
 
             if (this.CallbacksHooked)
-                Log.Error("[CloseSplitMenu] Callbacks shouldn't be hooked");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(CloseSplitMenu)}] Callbacks shouldn't still be hooked on closing!");
             }
 
         /// <summary>Called when the current handler loses focus when the split menu is open, allowing it to cancel the operation or run the default behaviour.</summary>
@@ -92,7 +92,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.HoverItem = this.NativeMenu.hoveredItem;
                 }
             catch (Exception e) {
-                Log.Error($"Failed to get properties from native menu: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(OpenSplitMenu)}] Failed to get properties from native menu: {e}");
                 return EInputHandled.NotHandled;
                 }
 
@@ -181,7 +181,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Cancels the operation so no items are sold or bought.</summary>
         private void RevertItems() {
             if (this.HoverItem != null && this.TotalItems > 0) {
-                Log.Trace("Reverting items");
+                Log.Trace($"[{nameof(ItemGrabMenuHandler)}.{nameof(RevertItems)}] Reverting items");
                 this.HoverItem.Stack = this.TotalItems;
 
                 RestoreNativeCallbacks();
@@ -208,7 +208,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.CallbacksHooked = true;
                 }
             catch (Exception e) {
-                Log.Error($"Failed to hook ItemGrabMenu callbacks: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(HookCallbacks)}] Failed to hook ItemGrabMenu callbacks: {e}");
                 return false;
                 }
             return true;
@@ -229,7 +229,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.CallbacksHooked = false;
                 }
             catch (Exception e) {
-                Log.Error($"Failed to restore native callbacks: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(RestoreNativeCallbacks)}] Failed to restore native callbacks: {e}");
                 }
             }
         }

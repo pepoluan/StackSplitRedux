@@ -1,4 +1,4 @@
-using StardewValley.Menus;
+﻿using StardewValley.Menus;
 using StackSplitRedux.UI;
 
 namespace StackSplitRedux.MenuHandlers

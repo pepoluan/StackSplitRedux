@@ -112,17 +112,17 @@ namespace StackSplitRedux.MenuHandlers
                     // Store where the player clicked to pass to the native code after the split menu has been submitted so it remains the same even if the mouse moved.
                     // Patcher note:
                     this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
-                    Log.TraceIfD($"BaseMenuHandler.HandleInput.ClickItemLocation = {this.ClickItemLocation}");
+                    Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}].ClickItemLocation = {this.ClickItemLocation}");
 
                     // Notify the handler the inventory was clicked.
                     if (this.HasInventory && !this.Inventory.Initialized)
-                        Log.Trace("Handler has inventory but inventory isn't initialized.");
+                        Log.Trace($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Handler has inventory but inventory isn't initialized.");
                     if (this.HasInventory && this.Inventory.Initialized && this.Inventory.WasClicked(Game1.getMouseX(true), Game1.getMouseY(true))) {
-                        Log.TraceIfD("Jumping to InventoryClicked");
+                        Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Jumping to InventoryClicked");
                         return InventoryClicked();
                         }
 
-                    Log.TraceIfD("Jumping to OpenSplitMenu");
+                    Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Jumping to OpenSplitMenu");
                     return OpenSplitMenu();
                     }
                 return EInputHandled.NotHandled;
@@ -216,7 +216,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.Inventory.Init(inventoryMenu, hoveredItemField);
                 }
             catch (Exception e) {
-                Log.Error($"Failed to initialize the inventory handler: {e}");
+                Log.Error($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler: {e}");
                 }
             }
 

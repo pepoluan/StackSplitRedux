@@ -1,4 +1,4 @@
-using StackSplitRedux.UI;
+﻿using StackSplitRedux.UI;
 using StardewValley;
 using StardewValley.Menus;
 
