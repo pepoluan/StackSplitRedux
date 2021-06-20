@@ -183,7 +183,7 @@ namespace StackSplitRedux
             }
 
         private void InterceptOtherMods() {
-            foreach (var kvp in OtherMods) {
+            foreach (var kvp in OtherMods.AsEnumerable()) {
                 string modID = kvp.Key;
                 if (!Mod.Registry.IsLoaded(modID)) continue;
                 Log.Debug($"{modID} detected, registering its menus:");
