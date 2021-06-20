@@ -84,9 +84,7 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Draws the split menu.</summary>
         public virtual void Draw(SpriteBatch spriteBatch) {
-            if (this.SplitMenu != null) {
-                this.SplitMenu.Draw(spriteBatch);
-                }
+            this.SplitMenu?.Draw(spriteBatch);
             }
 
         /// <summary>Handle user input.</summary>
