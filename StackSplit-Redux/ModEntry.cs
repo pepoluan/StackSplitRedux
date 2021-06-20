@@ -1,4 +1,6 @@
-﻿namespace StackSplitRedux
+﻿using System.Collections.Generic;
+
+namespace StackSplitRedux
     {
     internal class Mod : StardewModdingAPI.Mod
         {
@@ -11,7 +13,9 @@
 
         private static StackSplit StackSplitRedux;
 
-        private const string OLD_STACKSPLITX = "tstaples.StackSplitX";
+        private readonly List<string> ConflictingMods = new() {
+            "tstaples.StackSplitX",
+            };
 
         public override void Entry(StardewModdingAPI.IModHelper helper) {
             Mod.Instance = this;
@@ -27,12 +31,18 @@
             }
 
         public bool DetectConflict() {
-            if (this.Helper.ModRegistry.IsLoaded(OLD_STACKSPLITX)) {
-                Log.Error("Old StackSplitX mod detected!");
-                Log.Error("Will abort loading this mod to prevent conflict/crashes!");
-                return true;
+            bool conflict = false;
+            foreach (var mID in ConflictingMods) {
+                if (Mod.Registry.IsLoaded(mID)) {
+                    Log.Alert($"{mID} detected!");
+                    conflict = true;
+                    }
                 }
-            return false;
+            if (conflict) {
+                Log.Error("Conflicting mods detected! Will abort loading this mod to prevent conflict/issues!");
+                Log.Error("Please upload the log to https://smapi.io/log and tell pepoluan about this!");
+                }
+            return conflict;
             }
         }
     }
