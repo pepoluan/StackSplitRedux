@@ -1,4 +1,3 @@
-﻿using StardewModdingAPI;
 using System;
 using StardewValley.Menus;
 using StardewValley;

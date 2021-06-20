@@ -1,5 +1,4 @@
-﻿using StackSplitRedux.UI;
-using StardewModdingAPI;
+using StackSplitRedux.UI;
 using StardewValley;
 using StardewValley.Menus;
 
