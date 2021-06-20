@@ -8,7 +8,7 @@
     <ProjectGuid>{41F0250E-92C8-4B4A-9685-0F82870F9C23}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StackSplit_Redux</RootNamespace>
+    <RootNamespace>StackSplitRedux</RootNamespace>
     <AssemblyName>StackSplit-Redux</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
