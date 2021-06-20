@@ -28,7 +28,6 @@ namespace StackSplitRedux.MenuHandlers
 
 
         /// <summary>Constructor.</summary>
-        /// <param name="reflection">ReflectionHelper</param>
         /// <param name="menu">Native shop menu.</param>
         /// <param name="item">Clicked item that this action will act on.</param>
         public ShopAction(ShopMenu menu, ISalable item) {

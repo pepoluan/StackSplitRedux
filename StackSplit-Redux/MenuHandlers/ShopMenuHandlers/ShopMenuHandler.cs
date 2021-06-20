@@ -10,7 +10,6 @@ namespace StackSplitRedux.MenuHandlers
         private IShopAction CurrentShopAction = null;
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public ShopMenuHandler()
             : base() {
             }

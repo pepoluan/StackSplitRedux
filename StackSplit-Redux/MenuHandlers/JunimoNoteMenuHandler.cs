@@ -8,7 +8,6 @@ namespace StackSplitRedux.MenuHandlers
     public class JunimoNoteMenuHandler : BaseMenuHandler<JunimoNoteMenu>
         {
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public JunimoNoteMenuHandler()
             : base() {
             }

@@ -64,7 +64,6 @@ namespace StackSplitRedux.UI
         private readonly Caret Caret;
 
         /// <summary>Constructs an instance.</summary>
-        /// <param name="inputHelper">The SMAPI input helper.</param>
         /// <param name="characterLimit">The character limit.</param>
         /// <param name="defaultText">The default text to display.</param>
         public InputTextBox(int characterLimit = 0, string defaultText = "") {

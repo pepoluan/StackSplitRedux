@@ -9,7 +9,6 @@ namespace StackSplitRedux.MenuHandlers
     public class SellAction : ShopAction
         {
         /// <summary>Constructs an instance.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
         public SellAction(ShopMenu menu, Item item)
@@ -88,7 +87,6 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>Creates an instance of the action.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="shopMenu">Native shop menu.</param>
         /// <param name="mouse">Mouse position.</param>
         /// <returns>The instance or null if no valid item was selected.</returns>

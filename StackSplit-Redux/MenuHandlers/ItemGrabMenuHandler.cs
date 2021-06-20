@@ -39,7 +39,6 @@ namespace StackSplitRedux.MenuHandlers
 
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public ItemGrabMenuHandler()
             : base() {
             // We're handling the inventory in such a way that we don't need the generic handler.

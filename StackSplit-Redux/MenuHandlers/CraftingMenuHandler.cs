@@ -11,7 +11,6 @@ namespace StackSplitRedux.MenuHandlers
         private readonly CraftingPageHandler CraftingPageHandler;
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public CraftingMenuHandler()
             : base() {
             this.CraftingPageHandler = new CraftingPageHandler();

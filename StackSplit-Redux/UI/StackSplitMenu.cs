@@ -34,7 +34,6 @@ namespace StackSplitRedux.UI
         private readonly float MouseScale = Game1.pixelZoom + (Game1.dialogueButtonScale / 150f);
 
         /// <summary>Constructs an instance.</summary>
-        /// <param name="inputHelper">The SMAPI input helper.</param>
         /// <param name="textSubmittedCallback">The callback for when the text is submitted.</param>
         /// <param name="heldStackAmount">The default stack amount to set the text to.</param>
         public StackSplitMenu(TextSubmittedDelegate textSubmittedCallback, int heldStackAmount) {

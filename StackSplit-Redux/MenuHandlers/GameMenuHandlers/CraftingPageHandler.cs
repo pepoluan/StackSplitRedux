@@ -14,7 +14,6 @@ namespace StackSplitRedux.MenuHandlers
         private bool WasInventoryClicked = false;
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public CraftingPageHandler()
             : base() {
             }

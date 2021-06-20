@@ -32,7 +32,6 @@ namespace StackSplitRedux.MenuHandlers
 
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public BaseMenuHandler() {
             this.Inventory = new InventoryHandler();
             }

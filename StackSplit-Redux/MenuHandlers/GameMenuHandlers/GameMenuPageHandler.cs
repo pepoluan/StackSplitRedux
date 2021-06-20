@@ -20,7 +20,6 @@ namespace StackSplitRedux.MenuHandlers
         protected TPageType MenuPage { get; private set; }
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public GameMenuPageHandler() {
             }
 

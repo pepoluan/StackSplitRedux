@@ -27,7 +27,6 @@ namespace StackSplitRedux.MenuHandlers
         private List<ClickableComponent> Tabs;
 
         /// <summary>Constructs and instance.</summary>
-        /// <param name="helper">Mod helper instance.</param>
         public GameMenuHandler()
             : base() {
             PageHandlers = new Dictionary<int, IGameMenuPageHandler>()

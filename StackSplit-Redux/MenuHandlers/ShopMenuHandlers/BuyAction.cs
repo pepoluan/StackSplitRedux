@@ -81,7 +81,6 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>Helper method getting which item in the shop was clicked.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="shopMenu">Native shop menu.</param>
         /// <param name="p">Mouse location.</param>
         /// <returns>The clicked item or null if none was clicked.</returns>
@@ -93,7 +92,6 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>Gets the index of the clicked shop item. This index corresponds to the list of buttons and list of items.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="shopMenu">Native shop menu.</param>
         /// <param name="p">Mouse location.</param>
         /// <returns>The clicked item or null if none was clicked.</returns>
@@ -104,7 +102,6 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>Creates an instance of the action.</summary>
-        /// <param name="reflection">Reflection helper.</param>
         /// <param name="shopMenu">Native shop menu.</param>
         /// <param name="mouse">Mouse position.</param>
         /// <returns>The instance or null if no valid item was selected.</returns>
