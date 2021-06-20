@@ -75,7 +75,7 @@ namespace StackSplitRedux
                 HandlerMapping.TryGetHandler(nuMenu.GetType(), out IMenuHandler handler)
                 || HandlerMapping.TryGetHandler(nuMenu.ToString(), out handler)
                 ) {
-                Log.Trace($"{nuMenu} intercepted");
+                Log.TraceIfD($"{nuMenu} intercepted");
                 // Close the current one of it's valid
                 if (this.CurrentMenuHandler != null) {
                     this.CurrentMenuHandler.Close();
@@ -85,6 +85,9 @@ namespace StackSplitRedux
                 this.CurrentMenuHandler.Open(nuMenu);
 
                 SubscribeHandlerEvents();
+                }
+            else {
+                Log.TraceIfD($"{nuMenu} not intercepted, don't know how");
                 }
             }
 
