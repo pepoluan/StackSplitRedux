@@ -171,7 +171,12 @@ namespace StackSplitRedux
                 }
             }
 
-        /// <summary>Raised after the game draws to the sprite patch in a draw tick, just before the final sprite batch is rendered to the screen. Since the game may open/close the sprite batch multiple times in a draw tick, the sprite batch may not contain everything being drawn and some things may already be rendered to the screen. Content drawn to the sprite batch at this point will be drawn over all vanilla content (including menus, HUD, and cursor).</summary>
+        /// <summary><para>Raised after the game draws to the sprite patch in a draw tick, just before the final sprite batch
+        /// is rendered to the screen.</para>
+        /// <para>Since the game may open/close the sprite batch multiple times in a draw tick, 
+        /// the sprite batch may not contain everything being drawn and some things may already be rendered to the screen. 
+        /// Content drawn to the sprite batch at this point will be drawn over all vanilla content (including menus, HUD, 
+        /// and cursor).</para></summary>
         private void OnRendered(object sender, RenderedEventArgs e) {
             // tell the current handler to draw the split menu if it's active
             this.CurrentMenuHandler?.Draw(Game1.spriteBatch);

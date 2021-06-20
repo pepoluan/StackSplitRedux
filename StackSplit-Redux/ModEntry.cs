@@ -4,12 +4,17 @@ namespace StackSplitRedux
     {
     internal class Mod : StardewModdingAPI.Mod
         {
+        /// <summary>
+        /// These Convenience Properties are here so we don't have to keep passing a ref to Helper as params.
+        /// </summary>
+        #region Convenience Properties
         internal static StardewModdingAPI.Mod Instance;
         internal static StardewModdingAPI.ITranslationHelper I18n { get => Instance.Helper.Translation; }
         internal static StardewModdingAPI.IReflectionHelper Reflection { get => Instance.Helper.Reflection; }
         internal static StardewModdingAPI.IInputHelper Input { get => Instance.Helper.Input; }
         internal static StardewModdingAPI.Events.IModEvents Events { get => Instance.Helper.Events; }
         internal static StardewModdingAPI.IModRegistry Registry { get => Instance.Helper.ModRegistry; }
+        #endregion
 
         private static StackSplit StackSplitRedux;
 
