@@ -19,8 +19,9 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>The native page this handler is for.</summary>
         protected TPageType MenuPage { get; private set; }
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only logs instantiation</summary>
         public GameMenuPageHandler() {
+            Log.TraceIfD($"[{nameof(GameMenuPageHandler<TPageType>)}] Instatiated with TPageType = {typeof(TPageType)}");
             }
 
         /// <summary>Notifies the page handler that it's corresponding menu has been opened.</summary>

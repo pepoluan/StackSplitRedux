@@ -31,8 +31,9 @@ namespace StackSplitRedux.MenuHandlers
         private bool IsMenuOpen = false;
 
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only does logging if DEBUG</summary>
         public BaseMenuHandler() {
+            Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}] Instantiated with TMenuType = {typeof(TMenuType)}");
             }
 
         /// <summary>Checks if the menu this handler wraps is open.</summary>
