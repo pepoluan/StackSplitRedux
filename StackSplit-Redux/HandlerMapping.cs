@@ -22,6 +22,8 @@ namespace StackSplitRedux
             }
 
         internal static void Add(Type menuType, Type handlerType) {
+            if (HandlerByType.ContainsKey(menuType))
+                Log.Warn($"Redefining handler for {menuType}");
             Add(menuType, GetSingleton(handlerType));
             }
 
