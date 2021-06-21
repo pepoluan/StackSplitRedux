@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System.Collections.Generic;
@@ -42,15 +42,28 @@ namespace StackSplitRedux.MenuHandlers
             var chosen_max = chosen.maximumStackSize();
             var nativeMenu = this.NativeShopMenu;
 
+            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}");
+
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
             var priceAndStockField = Mod.Reflection.GetField<Dictionary<ISalable, int[]>>(nativeMenu, "itemPriceAndStock");
             var priceAndStockMap = priceAndStockField.GetValue();
             Debug.Assert(priceAndStockMap.ContainsKey(chosen));
 
             // Calculate the number to purchase
-            int numInStock = priceAndStockMap[chosen][1];
-            int itemPrice = priceAndStockMap[chosen][0];
-            int currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
+            int[] stockData = priceAndStockMap[chosen];
+            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen stockData = {string.Join(", ", stockData)}");
+            int numInStock = stockData[1];
+            int itemPrice = stockData[0];
+            int currentMonies;
+            if (itemPrice > 0) {  // using money
+                currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
+                }
+            else {  // barter system. "monies" is now the wanted barter item in [2]
+                itemPrice = stockData[3];
+                currentMonies = Game1.player.getItemCount(stockData[2]);
+                }
+            Debug.Assert(itemPrice > 0);
+
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
             amount = Seq.Min(amount, currentMonies / itemPrice, numInStock, chosen_max);
 
