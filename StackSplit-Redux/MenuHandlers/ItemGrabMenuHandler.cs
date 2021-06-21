@@ -102,7 +102,8 @@ namespace StackSplitRedux.MenuHandlers
                 }
 
             this.TotalItems = this.HoverItem.Stack;
-            this.StackAmount = (int)Math.Ceiling(this.TotalItems / 2.0); // default at half
+            // +1 before /2 ensures number is rounded UP
+            this.StackAmount = (this.TotalItems + 1) / 2; // default at half
 
             // Create the split menu
             this.SplitMenu = new StackSplitMenu(OnStackAmountReceived, this.StackAmount);
@@ -157,7 +158,7 @@ namespace StackSplitRedux.MenuHandlers
                 // update held item stack and item stack
                 //int numCurrentlyHeld = heldItem.Stack; // How many we're actually holding.
                 //int numInPile = this.HoverItem.Stack + item.Stack;
-                int wantToHold = Math.Min(this.TotalItems, Math.Max(this.StackAmount, 0));
+                int wantToHold = Math.Min(this.TotalItems, this.StackAmount);
 
                 this.HoverItem.Stack = this.TotalItems - wantToHold;
                 heldItem.Stack = wantToHold;

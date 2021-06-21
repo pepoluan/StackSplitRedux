@@ -7,12 +7,11 @@ namespace StackSplitRedux.MenuHandlers
     class CraftingMenuHandler : BaseMenuHandler<CraftingPage>
         {
         /// <summary>The crafting page handler.</summary>
-        private readonly CraftingPageHandler CraftingPageHandler;
+        private readonly CraftingPageHandler CraftingPageHandler = new();
 
         /// <summary>Constructs and instance.</summary>
         public CraftingMenuHandler()
             : base() {
-            this.CraftingPageHandler = new CraftingPageHandler();
             }
 
         /// <summary>Notifies the handler that it's native menu has been opened.</summary>

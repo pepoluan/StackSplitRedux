@@ -1,4 +1,4 @@
-﻿using StackSplitRedux.UI;
+using StackSplitRedux.UI;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -12,7 +12,10 @@ namespace StackSplitRedux.MenuHandlers
         protected const int INVALID_TAB = -1;
 
         /// <summary>Tab index mapped to it's handler. Using a dict because not all indices are handled.</summary>
-        private readonly Dictionary<int, IGameMenuPageHandler> PageHandlers;
+        private readonly Dictionary<int, IGameMenuPageHandler> PageHandlers = new() {
+                { GameMenu.inventoryTab, new InventoryPageHandler() },
+                { GameMenu.craftingTab, new CraftingPageHandler() }
+            };
 
         /// <summary>The handler for the current tab,</summary>
         private IGameMenuPageHandler CurrentPageHandler = null;
@@ -29,11 +32,6 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Constructs and instance.</summary>
         public GameMenuHandler()
             : base() {
-            PageHandlers = new Dictionary<int, IGameMenuPageHandler>()
-            {
-                { GameMenu.inventoryTab, new InventoryPageHandler() },
-                { GameMenu.craftingTab, new CraftingPageHandler() }
-            };
             }
 
         /// <summary>Notifies the handler that it's native menu has been opened.</summary>
@@ -124,17 +122,20 @@ namespace StackSplitRedux.MenuHandlers
 
             CloseCurrentHandler();
 
-            if (this.PageHandlers.ContainsKey(newTab)) {
-                this.PreviousTab = newTab;
-                this.CurrentPageHandler = this.PageHandlers[newTab];
-                Log.TraceIfD($"Found a handler for tab {newTab} : {this.CurrentPageHandler}");
-
-                var pages = Mod.Reflection.GetField<List<IClickableMenu>>(this.NativeMenu, "pages").GetValue();
-                this.CurrentPageHandler.Open(this.NativeMenu, pages[newTab], this.Inventory);
-                return true;
+            if (!PageHandlers.TryGetValue(newTab, out IGameMenuPageHandler pageHandler)) {
+                Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] No handler for tab {newTab}");
+                return false;
                 }
-            Log.TraceIfD($"No handler for tab {newTab}");
-            return false;
+
+            Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] Found a handler for tab {newTab} : {pageHandler}");
+
+            this.PreviousTab = newTab;
+            this.CurrentPageHandler = pageHandler;
+
+            var pages = Mod.Reflection.GetField<List<IClickableMenu>>(this.NativeMenu, "pages").GetValue();
+            pageHandler.Open(this.NativeMenu, pages[newTab], this.Inventory);
+
+            return true;
             }
 
         /// <summary>Closes the current handler and sets the previous tab to invalid.</summary>

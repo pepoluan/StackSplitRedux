@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -13,7 +13,7 @@ namespace StackSplitRedux.MenuHandlers
         : IMenuHandler where TMenuType : IClickableMenu
         {
         /// <summary>The inventory handler.</summary>
-        protected InventoryHandler Inventory;
+        protected readonly InventoryHandler Inventory = new();
 
         /// <summary>Split menu we display for the user to input the desired stack size.</summary>
         protected StackSplitMenu SplitMenu;
@@ -33,7 +33,6 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Constructs and instance.</summary>
         public BaseMenuHandler() {
-            this.Inventory = new InventoryHandler();
             }
 
         /// <summary>Checks if the menu this handler wraps is open.</summary>

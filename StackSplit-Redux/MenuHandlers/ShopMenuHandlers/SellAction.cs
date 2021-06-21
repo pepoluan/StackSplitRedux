@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -14,7 +14,8 @@ namespace StackSplitRedux.MenuHandlers
         public SellAction(ShopMenu menu, Item item)
             : base(menu, item) {
             // Default amount
-            this.Amount = (int)Math.Ceiling(this.ClickedItem.Stack / 2.0);
+            // +1 before /2 ensures we get the number rounded UP
+            this.Amount = (this.ClickedItem.Stack + 1) / 2;
             }
 
         /// <summary>Verifies the conditions to perform te action.</summary>

@@ -108,13 +108,13 @@ namespace StackSplitRedux.MenuHandlers
             Debug.Assert(heldItem != null);
 
             // Clamp the amount to the total number of items
-            stackAmount = (int)MathHelper.Clamp(stackAmount, 0, hoveredItems);
+            stackAmount = Math.Min(Math.Max(0, stackAmount), hoveredItems);
             heldItem.Stack = Math.Min(maxStack, heldItems + stackAmount);
             heldItem = heldItem.Stack > 0 ? heldItem : null;
 
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
-            int overflow = Math.Max(heldItems + stackAmount - maxStack, 0);
-            hoveredItem.Stack = hoveredItems - (stackAmount - overflow);
+            if ((heldItems + stackAmount) > maxStack)
+                hoveredItem.Stack = hoveredItems - (maxStack - heldItems);
 
             // Remove the item from the inventory as it's now all being held.
             if (hoveredItem.Stack == 0)
@@ -140,7 +140,8 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Gets the stack amount you would usually have when shift+right-clicking.</summary>
         public int GetDefaultSplitStackAmount() {
-            return (int)Math.Ceiling(this.HoveredItem.Stack / 2.0);
+            // +1 before /2 will round UP the result, the intention of original code
+            return (this.HoveredItem.Stack + 1) / 2;
             }
 
         /// <summary>Removes an item from the native inventory</summary>

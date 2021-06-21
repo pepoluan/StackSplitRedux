@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace StackSplitRedux.MenuHandlers
     {
@@ -40,6 +41,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="clickLocation">Where the player clicked.</param>
         public override void PerformAction(int amount, Point clickLocation) {
             var chosen = this.ClickedItem;
+            var chosen_max = chosen.maximumStackSize();
             var nativeMenu = this.NativeShopMenu;
 
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
@@ -51,12 +53,12 @@ namespace StackSplitRedux.MenuHandlers
             int numInStock = priceAndStockMap[chosen][1];
             int itemPrice = priceAndStockMap[chosen][0];
             int currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
-            amount = Math.Min(Math.Min(amount, currentMonies / itemPrice), Math.Min(numInStock, chosen.maximumStackSize()));
+            // Using Linq here is slower by A LOT but ultimately MUCH more readable
+            amount = (new[] { amount, currentMonies / itemPrice, numInStock, chosen_max }).Min();
 
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
             int numHeld = heldItem?.Stack ?? 0;
-            int overflow = Math.Max(numHeld + amount - chosen.maximumStackSize(), 0);
-            amount -= overflow;
+            if ((numHeld + amount) > chosen_max) amount = chosen_max - numHeld;
 
             Log.TraceIfD($"Attempting to purchase {amount} of {chosen.Name} for {itemPrice * amount}");
 
