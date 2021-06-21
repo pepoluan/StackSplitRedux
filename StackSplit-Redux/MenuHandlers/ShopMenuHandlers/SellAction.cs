@@ -56,11 +56,24 @@ namespace StackSplitRedux.MenuHandlers
 
                 // Messy because it's a direct copy-paste from the source code
                 Vector2 value = this.Inventory.snapToClickableComponent(clickLocation.X, clickLocation.Y);
-                animations.Add(new TemporaryAnimatedSprite(Game1.debrisSpriteSheet.Name, new Rectangle(Game1.random.Next(2) * Game1.tileSize, 256, Game1.tileSize, Game1.tileSize), 9999f, 1, 999, value + new Vector2(32f, 32f), false, false) {
-                    alphaFade = 0.025f,
-                    motion = Utility.getVelocityTowardPoint(new Point((int)value.X + 32, (int)value.Y + 32), Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f), 12f),
-                    acceleration = Utility.getVelocityTowardPoint(new Point((int)value.X + 32, (int)value.Y + 32), Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f), 0.5f)
-                    });
+                var moneyBoxStartingPoint = new Point((int)value.X + 32, (int)value.Y + 32);
+                var moneyBoxEndingPoint = Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f);
+                animations.Add(
+                    new TemporaryAnimatedSprite(
+                        textureName: Game1.debrisSpriteSheet.Name, 
+                        sourceRect: new Rectangle(Game1.random.Next(2) * Game1.tileSize, 256, Game1.tileSize, Game1.tileSize), 
+                        animationInterval: 9999f, 
+                        animationLength: 1, 
+                        numberOfLoops: 999, 
+                        position: value + new Vector2(32f, 32f), 
+                        flicker: false, 
+                        flipped: false
+                        ) {
+                            alphaFade = 0.025f,
+                            motion = Utility.getVelocityTowardPoint(moneyBoxStartingPoint, moneyBoxEndingPoint, 12f),
+                            acceleration = Utility.getVelocityTowardPoint(moneyBoxStartingPoint, moneyBoxEndingPoint, 0.5f)
+                            }
+                    );
 
                 animationsField.SetValue(animations);
                 }
