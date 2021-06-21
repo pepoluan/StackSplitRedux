@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -27,7 +27,8 @@ namespace StackSplitRedux.MenuHandlers
         private Rectangle Bounds;
 
         /// <summary>Where the user clicked so moving </summary>
-        private Point SelectedItemPosition;
+        private int SelectedItemPosition_X;
+        private int SelectedItemPosition_Y;
 
         /// <summary>The hovered item field owned by the parent menu that contains the inventory.</summary>
         private IReflectedField<Item> HoveredItemField;
@@ -76,7 +77,8 @@ namespace StackSplitRedux.MenuHandlers
         public void SelectItem(int mouseX, int mouseY) {
             Debug.Assert(this.Initialized);
 
-            this.SelectedItemPosition = new Point(mouseX, mouseY);
+            this.SelectedItemPosition_X = mouseX;
+            this.SelectedItemPosition_Y = mouseY;
             this.HoveredItem = this.HoveredItemField.GetValue();
             }
 
@@ -104,7 +106,7 @@ namespace StackSplitRedux.MenuHandlers
             int maxStack = hoveredItem.maximumStackSize();
 
             // Run native click code to get the selected item
-            heldItem = this.NativeInventory.rightClick(this.SelectedItemPosition.X, this.SelectedItemPosition.Y, heldItem);
+            heldItem = this.NativeInventory.rightClick(this.SelectedItemPosition_X, this.SelectedItemPosition_Y, heldItem);
             Debug.Assert(heldItem != null);
 
             // Clamp the amount to the total number of items
