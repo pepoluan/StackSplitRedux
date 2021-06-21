@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -60,18 +60,19 @@ namespace StackSplitRedux.MenuHandlers
             int numHeld = heldItem?.Stack ?? 0;
             if ((numHeld + amount) > chosen_max) amount = chosen_max - numHeld;
 
-            Log.TraceIfD($"Attempting to purchase {amount} of {chosen.Name} for {itemPrice * amount}");
+            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Attempting to purchase {amount} of {chosen.Name} for {itemPrice * amount}");
 
             if (amount <= 0) {
-                Log.TraceIfD("amount <= 0, purchase aborted");
+                Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] amount <= 0, purchase aborted");
                 return;
                 }
-            Log.TraceIfD($"Purchase of {amount} {chosen.Name} successful");
+            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchase of {amount} {chosen.Name} successful");
 
             // Try to purchase the item - method returns true if it should be removed from the shop since there's no more.
             var purchaseMethod = Mod.Reflection.GetMethod(nativeMenu, "tryToPurchaseItem");
             int index = BuyAction.GetClickedItemIndex(nativeMenu, clickLocation);
             if (purchaseMethod.Invoke<bool>(chosen, heldItem, amount, clickLocation.X, clickLocation.Y, index)) {
+                Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Item is limited, reducing stock");
                 // remove the purchased item from the stock etc.
                 priceAndStockMap.Remove(chosen);
                 priceAndStockField.SetValue(priceAndStockMap);

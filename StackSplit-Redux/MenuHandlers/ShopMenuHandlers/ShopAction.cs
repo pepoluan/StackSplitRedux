@@ -39,7 +39,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.ShopCurrencyType = Mod.Reflection.GetField<int>(this.NativeShopMenu, "currency").GetValue();
                 }
             catch (Exception e) {
-                Log.Error($"Failed to get native shop data: {e}");
+                Log.Error($"[{nameof(ShopAction)}..ctor] Failed to get native shop data. Exception:\n{e}");
                 }
             }
 

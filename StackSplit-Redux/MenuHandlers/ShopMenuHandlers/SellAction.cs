@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -33,7 +33,7 @@ namespace StackSplitRedux.MenuHandlers
             // Sell item
             int price = CalculateSalePrice(this.ClickedItem, amount);
             ShopMenu.chargePlayer(Game1.player, this.ShopCurrencyType, price);
-            Log.Trace($"Charged player {price} for {amount} of {this.ClickedItem.Name}");
+            Log.Trace($"[{nameof(SellAction)}.{nameof(PerformAction)}] Charged player {price} for {amount} of {this.ClickedItem.Name}");
 
             // Update the stack amount/remove the item
             var actualInventory = this.Inventory.actualInventory;

@@ -24,7 +24,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Main event that derived handlers use to setup necessary hooks and other things needed to take over how the stack is split.</summary>
         /// <returns>If the input was handled or consumed.</returns>
         protected override EInputHandled OpenSplitMenu() {
-            Log.TraceIfD("OpenSplitMenu");
+            Log.TraceIfD($"[{nameof(ShopMenuHandler)}.{nameof(OpenSplitMenu)}] Entered");
             this.CurrentShopAction = BuyAction.Create(this.NativeMenu, this.ClickItemLocation);
             return TryOpenSplitMenu(this.CurrentShopAction);
             }
@@ -58,7 +58,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="action">The action to perform.</param>
         private EInputHandled TryOpenSplitMenu(IShopAction action) {
             if (action?.CanPerformAction() == true) {
-                Log.TraceIfD("Creating Split Menu");
+                Log.TraceIfD($"[{nameof(ShopMenuHandler)}.{nameof(TryOpenSplitMenu)}] Creating Split Menu");
                 this.SplitMenu = new StackSplitMenu(OnStackAmountReceived, this.CurrentShopAction.StackAmount);
                 return EInputHandled.Consumed;
                 }

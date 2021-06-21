@@ -1,4 +1,4 @@
-using StackSplitRedux.UI;
+﻿using StackSplitRedux.UI;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -42,7 +42,7 @@ namespace StackSplitRedux.MenuHandlers
             this.Tabs = Mod.Reflection.GetField<List<ClickableComponent>>(this.NativeMenu, "tabs").GetValue();
 
             if (!ChangeTabs(this.CurrentTab)) {
-                Log.Trace($"Could not change to tab {this.CurrentTab}");
+                Log.Trace($"[{nameof(GameMenuHandler)}.{nameof(Open)}] Could not change to tab {this.CurrentTab}");
                 }
             }
 
@@ -104,7 +104,7 @@ namespace StackSplitRedux.MenuHandlers
             // Check which tab was click and switch to the corresponding handler.
             var mX = Game1.getMouseX(true);
             var mY = Game1.getMouseY(true);
-            Log.TraceIfD($"Mouse clicked on ({mX}, {mY})");
+            Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(HandleLeftClick)}] Mouse clicked on ({mX}, {mY})");
             int tabIndex = this.Tabs.FindIndex(tab => tab.containsPoint(Game1.getMouseX(true), Game1.getMouseY(true)));
             if (tabIndex > INVALID_TAB) {
                 Log.TraceIfD($"Changed tab to {tabIndex}");

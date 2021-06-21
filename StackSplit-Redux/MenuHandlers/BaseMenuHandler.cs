@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -215,7 +215,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.Inventory.Init(inventoryMenu, hoveredItemField);
                 }
             catch (Exception e) {
-                Log.Error($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler: {e}");
+                Log.Error($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler. Exception:\n{e}");
                 }
             }
 
