@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -54,7 +54,7 @@ namespace StackSplitRedux.MenuHandlers
             int itemPrice = priceAndStockMap[chosen][0];
             int currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
-            amount = (new[] { amount, currentMonies / itemPrice, numInStock, chosen_max }).Min();
+            amount = Seq.Min(amount, currentMonies / itemPrice, numInStock, chosen_max);
 
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
             int numHeld = heldItem?.Stack ?? 0;

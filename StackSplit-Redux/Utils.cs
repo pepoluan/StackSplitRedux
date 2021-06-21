@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI;
+using StardewModdingAPI;
 
 namespace StackSplitRedux
     {
@@ -18,5 +18,8 @@ namespace StackSplitRedux
             Trace(msg);
 #endif
             }
+        }
+    public static class Seq {
+        public static int Min(params int[] args) => args.Min();
         }
     }
