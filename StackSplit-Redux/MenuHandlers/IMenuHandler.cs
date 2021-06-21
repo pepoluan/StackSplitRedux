@@ -24,11 +24,11 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Checks the menu is the correct type.</summary>
         bool IsCorrectMenuType(IClickableMenu menu);
 
-        /// <summary>Notifies the handler that it's native menu has been opened.</summary>
+        /// <summary>Notifies the handler that its native menu has been opened.</summary>
         /// <param name="menu">The menu that was opened.</param>
         void Open(IClickableMenu menu);
 
-        /// <summary>Notifies the handler that it's native menu was closed.</summary>
+        /// <summary>Notifies the handler that its native menu was closed.</summary>
         void Close();
 
         /// <summary>Runs on tick for handling things like highlighting text.</summary>

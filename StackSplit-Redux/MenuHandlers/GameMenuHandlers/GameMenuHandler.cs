@@ -1,4 +1,4 @@
-using StackSplitRedux.UI;
+﻿using StackSplitRedux.UI;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -11,7 +11,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Represents an invalid tab index.</summary>
         protected const int INVALID_TAB = -1;
 
-        /// <summary>Tab index mapped to it's handler. Using a dict because not all indices are handled.</summary>
+        /// <summary>Tab index mapped to its handler. Using a dict because not all indices are handled.</summary>
         private readonly Dictionary<int, IGameMenuPageHandler> PageHandlers = new() {
                 { GameMenu.inventoryTab, new InventoryPageHandler() },
                 { GameMenu.craftingTab, new CraftingPageHandler() }
@@ -29,12 +29,12 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>The native list of clickable tabs, used for checking if they were clicked.</summary>
         private List<ClickableComponent> Tabs;
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public GameMenuHandler()
             : base() {
             }
 
-        /// <summary>Notifies the handler that it's native menu has been opened.</summary>
+        /// <summary>Notifies the handler that its native menu has been opened.</summary>
         /// <param name="menu">The menu that was opened.</param>
         public override void Open(IClickableMenu menu) {
             base.Open(menu);
@@ -46,7 +46,7 @@ namespace StackSplitRedux.MenuHandlers
                 }
             }
 
-        /// <summary>Notifies the handler that it's native menu was closed.</summary>
+        /// <summary>Notifies the handler that its native menu was closed.</summary>
         public override void Close() {
             base.Close();
             CloseCurrentHandler();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -36,7 +36,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Currently hovered item in the inventory.</summary>
         private Item HoveredItem;
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public InventoryHandler() {
             }
 

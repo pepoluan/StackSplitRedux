@@ -9,19 +9,19 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>The crafting page handler.</summary>
         private readonly CraftingPageHandler CraftingPageHandler = new();
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public CraftingMenuHandler()
             : base() {
             }
 
-        /// <summary>Notifies the handler that it's native menu has been opened.</summary>
+        /// <summary>Notifies the handler that its native menu has been opened.</summary>
         /// <param name="menu">The menu that was opened.</param>
         public override void Open(IClickableMenu menu) {
             base.Open(menu);
             this.CraftingPageHandler.Open(menu, this.NativeMenu, this.Inventory);
             }
 
-        /// <summary>Notifies the handler that it's native menu was closed.</summary>
+        /// <summary>Notifies the handler that its native menu was closed.</summary>
         public override void Close() {
             base.Close();
             this.CraftingPageHandler.Close();

@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -7,13 +7,13 @@ namespace StackSplitRedux.MenuHandlers
     {
     public class CraftingPageHandler : GameMenuPageHandler<CraftingPage>
         {
-        /// <summary>Used to store the click location so it's the same after the user submits the split menu even if they moved their mouse.</summary>
+        /// <summary>Store the click location so it's the same after the user submits the split menu even if they moved their mouse.</summary>
         private Point ClickItemLocation;
 
         /// <summary>Used to track if the inventory or crafting menu recieved input last.</summary>
         private bool WasInventoryClicked = false;
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public CraftingPageHandler()
             : base() {
             }

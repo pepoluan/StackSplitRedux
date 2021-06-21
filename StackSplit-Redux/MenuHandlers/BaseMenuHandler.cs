@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -51,7 +51,7 @@ namespace StackSplitRedux.MenuHandlers
             return menu is TMenuType;
             }
 
-        /// <summary>Notifies the handler that it's native menu has been opened.</summary>
+        /// <summary>Notifies the handler that its native menu has been opened.</summary>
         /// <param name="menu">The menu that was opened.</param>
         public virtual void Open(IClickableMenu menu) {
             Debug.Assert(IsCorrectMenuType(menu));
@@ -62,7 +62,7 @@ namespace StackSplitRedux.MenuHandlers
                 InitInventory();
             }
 
-        /// <summary>Notifies the handler that it's native menu was closed.</summary>
+        /// <summary>Notifies the handler that its native menu was closed.</summary>
         public virtual void Close() {
             this.IsMenuOpen = false;
             this.SplitMenu = null;
@@ -74,7 +74,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.SplitMenu?.Update();
                 }
             else if (this.SplitMenu != null) {
-                // Close the menu if the interval is reached as the player likely wants it's regular behavior
+                // Close the menu if the interval is reached as the player likely wants its regular behavior
                 CancelMove();
                 }
             }

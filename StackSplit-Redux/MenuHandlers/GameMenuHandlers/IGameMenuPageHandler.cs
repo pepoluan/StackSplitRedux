@@ -4,7 +4,7 @@ namespace StackSplitRedux.MenuHandlers
     {
     public interface IGameMenuPageHandler
         {
-        /// <summary>Notifies the page handler that it's corresponding menu has been opened.</summary>
+        /// <summary>Notifies the page handler that its corresponding menu has been opened.</summary>
         /// <param name="menu">The native menu owning all the pages.</param>
         /// <param name="page">The specific page this handler is for.</param>
         /// <param name="inventory">The inventory handler.</param>

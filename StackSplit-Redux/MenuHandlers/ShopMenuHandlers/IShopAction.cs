@@ -7,7 +7,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Gets the size of the stack the action is acting on.</summary>
         int StackAmount { get; }
 
-        /// <summary>Verifies the conditions to perform te action.</summary>
+        /// <summary>Verifies the conditions to perform the action.</summary>
         bool CanPerformAction();
 
         /// <summary>Does the action.</summary>

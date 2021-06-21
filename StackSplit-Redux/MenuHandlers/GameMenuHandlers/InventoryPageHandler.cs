@@ -1,11 +1,10 @@
-﻿using StardewModdingAPI;
-using StardewValley.Menus;
+﻿using StardewValley.Menus;
 
 namespace StackSplitRedux.MenuHandlers
     {
     public class InventoryPageHandler : GameMenuPageHandler<InventoryPage>
         {
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public InventoryPageHandler()
             : base() {
             }

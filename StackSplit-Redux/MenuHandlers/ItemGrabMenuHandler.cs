@@ -37,7 +37,7 @@ namespace StackSplitRedux.MenuHandlers
         private Item HeldItem => this.NativeMenu.heldItem;
 
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor.</summary>
         public ItemGrabMenuHandler()
             : base() {
             // We're handling the inventory in such a way that we don't need the generic handler.

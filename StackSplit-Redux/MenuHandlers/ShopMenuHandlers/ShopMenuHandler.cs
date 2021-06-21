@@ -1,5 +1,4 @@
 ﻿using StackSplitRedux.UI;
-using StardewModdingAPI;
 using StardewValley.Menus;
 
 namespace StackSplitRedux.MenuHandlers
@@ -9,7 +8,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>The shop action for the current operation.</summary>
         private IShopAction CurrentShopAction = null;
 
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public ShopMenuHandler()
             : base() {
             }

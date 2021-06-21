@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using StardewValley.Menus;
 using StardewValley;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using StardewModdingAPI;
 using System;
 
 namespace StackSplitRedux.UI

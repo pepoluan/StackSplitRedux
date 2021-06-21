@@ -6,7 +6,7 @@ namespace StackSplitRedux.MenuHandlers
     {
     public class JunimoNoteMenuHandler : BaseMenuHandler<JunimoNoteMenu>
         {
-        /// <summary>Constructs and instance.</summary>
+        /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public JunimoNoteMenuHandler()
             : base() {
             }
