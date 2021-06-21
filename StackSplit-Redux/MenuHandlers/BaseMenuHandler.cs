@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -34,6 +34,10 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Null constructor that currently only does logging if DEBUG</summary>
         public BaseMenuHandler() {
             Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}] Instantiated with TMenuType = {typeof(TMenuType)}");
+            }
+
+        ~BaseMenuHandler() {
+            Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}] Finalized for TMenuType = {typeof(TMenuType)}");
             }
 
         /// <summary>Checks if the menu this handler wraps is open.</summary>

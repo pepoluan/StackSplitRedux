@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI;
+using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -24,7 +24,11 @@ namespace StackSplitRedux.MenuHandlers
             Log.TraceIfD($"[{nameof(GameMenuPageHandler<TPageType>)}] Instatiated with TPageType = {typeof(TPageType)}");
             }
 
-        /// <summary>Notifies the page handler that it's corresponding menu has been opened.</summary>
+        ~GameMenuPageHandler() {
+            Log.TraceIfD($"[{nameof(GameMenuPageHandler<TPageType>)}] Finalized for TPageType = {typeof(TPageType)}");
+            }
+
+        /// <summary>Notifies the page handler that its corresponding menu has been opened.</summary>
         /// <param name="menu">The native menu owning all the pages.</param>
         /// <param name="page">The specific page this handler is for.</param>
         /// <param name="inventory">The inventory handler.</param>

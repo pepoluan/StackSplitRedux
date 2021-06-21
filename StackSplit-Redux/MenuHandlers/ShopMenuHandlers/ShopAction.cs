@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -41,6 +41,10 @@ namespace StackSplitRedux.MenuHandlers
             catch (Exception e) {
                 Log.Error($"[{nameof(ShopAction)}..ctor] Failed to get native shop data. Exception:\n{e}");
                 }
+            }
+
+        ~ShopAction() {
+            Log.TraceIfD($"[{nameof(ShopAction)}] Finalized for menu = {this.NativeShopMenu}, item = {this.ClickedItem}");
             }
 
         /// <summary>Gets the size of the stack the action is acting on.</summary>

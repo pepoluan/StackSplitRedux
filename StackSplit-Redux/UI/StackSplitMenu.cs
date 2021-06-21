@@ -63,6 +63,10 @@ namespace StackSplitRedux.UI
                 false);
             }
 
+        ~StackSplitMenu() {
+            Log.TraceIfD($"[{nameof(StackSplitMenu)}] Finalized");
+            }
+
         /// <summary>Closes the split menu so it stops receiving input.</summary>
         public void Close() {
             // Remove from the subscriber so it stops getting input.
