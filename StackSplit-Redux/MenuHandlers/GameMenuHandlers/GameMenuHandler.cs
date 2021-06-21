@@ -1,4 +1,4 @@
-﻿using StackSplitRedux.UI;
+using StackSplitRedux.UI;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -50,6 +50,7 @@ namespace StackSplitRedux.MenuHandlers
         public override void Close() {
             base.Close();
             CloseCurrentHandler();
+            this.Tabs = null;
             }
 
         /// <summary>Initializes the inventory using the most common variable names.</summary>
