@@ -4,6 +4,7 @@ using StardewValley;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
+using System;
 
 namespace StackSplitRedux.UI
     {
@@ -33,10 +34,15 @@ namespace StackSplitRedux.UI
         private readonly Color MouseTransparency = Color.White * Game1.mouseCursorTransparency;
         private readonly float MouseScale = Game1.pixelZoom + (Game1.dialogueButtonScale / 150f);
 
+        private readonly Guid GUID = Guid.NewGuid();
+
         /// <summary>Constructs an instance.</summary>
         /// <param name="textSubmittedCallback">The callback for when the text is submitted.</param>
         /// <param name="heldStackAmount">The default stack amount to set the text to.</param>
         public StackSplitMenu(TextSubmittedDelegate textSubmittedCallback, int heldStackAmount) {
+            Log.TraceIfD($"[{nameof(StackSplitMenu)}] Instantiated with textSubmittedCallback = {textSubmittedCallback}, heldStackAmount = {heldStackAmount}");
+            Log.TraceIfD($"[{nameof(StackSplitMenu)}] GUID = {GUID}");
+
             this.OnTextSubmitted = textSubmittedCallback;
             this.HeldStackAmount = heldStackAmount;
 
@@ -64,7 +70,8 @@ namespace StackSplitRedux.UI
             }
 
         ~StackSplitMenu() {
-            Log.TraceIfD($"[{nameof(StackSplitMenu)}] Finalized");
+            Log.TraceIfD($"[{nameof(StackSplitMenu)}] Finalized for textSubmittedCallback = {this.OnTextSubmitted}, heldStackAmount = {this.HeldStackAmount}");
+            Log.TraceIfD($"[{nameof(StackSplitMenu)}] GUID = {GUID}");
             }
 
         /// <summary>Closes the split menu so it stops receiving input.</summary>
