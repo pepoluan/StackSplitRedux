@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -39,7 +39,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="stackAmount">The default stack amount to display in the split menu.</param>
         /// <returns>If the input was handled or consumed. Generally returns not handled if an invalid item was selected.</returns>
         public override EInputHandled OpenSplitMenu(out int stackAmount) {
-            stackAmount = 1; // Craft 1 by default
+            stackAmount = Mod.Config.DefaultCraftingAmount;
             this.WasInventoryClicked = false;
 
             var hoverRecipe = Mod.Reflection.GetField<CraftingRecipe>(this.MenuPage, "hoverRecipe").GetValue();
