@@ -28,6 +28,10 @@ namespace StackSplitRedux
             RegisterEvents();
             }
 
+        ~StackSplit() {
+            Log.Error($"[{nameof(StackSplit)}] We got finalized! How come??");
+            }
+
         public void PrepareMapping() {
             HandlerMapping.Add(typeof(GameMenu), typeof(GameMenuHandler));
             HandlerMapping.Add(typeof(ShopMenu), typeof(ShopMenuHandler));
