@@ -27,11 +27,11 @@ namespace StackSplitRedux.MenuHandlers
 
             return
                 this.ClickedItem is Item chosen          // not null
+                && chosen.canStackWith(chosen)           // Item type is stackable
                 && (
                     held == null
                     || (chosen.canStackWith(held) && held.Stack < held.maximumStackSize())  // Holding the same item and not hold max stack
                     )
-                && chosen.canStackWith(chosen)           // Item type is stackable
                 && currentMonies >= chosen.salePrice()   // Can afford
                 ;
             }
