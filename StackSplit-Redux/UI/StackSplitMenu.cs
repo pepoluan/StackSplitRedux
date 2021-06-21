@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 using StardewValley.Menus;
 using StardewValley;
 using System.Diagnostics;
@@ -11,6 +11,9 @@ namespace StackSplitRedux.UI
     /// <summary>Manages the UI for inputting the stack amount.</summary>
     public class StackSplitMenu
         {
+        // Character limit of 4 since max stack size of anything (afaik is 999).
+        private const int CHAR_LIMIT = 4;
+
         /// <summary>Delegate declaration for when text is submitted.</summary>
         /// <param name="input">The submitted text.</param>
         public delegate void TextSubmittedDelegate(string input);
@@ -46,8 +49,7 @@ namespace StackSplitRedux.UI
             this.OnTextSubmitted = textSubmittedCallback;
             this.HeldStackAmount = heldStackAmount;
 
-            // Character limit of 4 since max stack size of anything (afaik is 999).
-            var inputBox = this.InputTextBox = new InputTextBox(4, heldStackAmount.ToString()) {
+            var inputBox = this.InputTextBox = new InputTextBox(CHAR_LIMIT, heldStackAmount.ToString()) {
                 Position = new Vector2(Game1.getMouseX(), Game1.getMouseY() - Game1.tileSize),
                 Extent = new Vector2(Game1.tileSize * 2, Game1.tileSize),
                 NumbersOnly = true,
@@ -116,7 +118,7 @@ namespace StackSplitRedux.UI
         /// <param name="x">X position.</param>
         /// <param name="y">Y position.</param>
         public bool ContainsPoint(int x, int y) {
-            return (this.OKButton.containsPoint(x, y) || this.InputTextBox.ContainsPoint(x, y));
+            return this.OKButton.containsPoint(x, y) || this.InputTextBox.ContainsPoint(x, y);
             }
 
         /// <summary>Updates the input textbox.</summary>
