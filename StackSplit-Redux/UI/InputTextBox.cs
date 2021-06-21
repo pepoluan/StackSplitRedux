@@ -179,8 +179,7 @@ namespace StackSplitRedux.UI
         /// <param name="spriteBatch">Spritebatch to draw with.</param>
         public void Draw(SpriteBatch spriteBatch) {
             // Part of the spritesheet containing the texture we want to draw
-            var menuTextureSourceRect = new Rectangle(0, 256, 60, 60);
-            IClickableMenu.drawTextureBox(spriteBatch, Game1.menuTexture, menuTextureSourceRect, (int)this.Position.X, (int)this.Position.Y, (int)this.Extent.X, (int)this.Extent.Y, Color.White);
+            IClickableMenu.drawTextureBox(spriteBatch, (int)this.Position.X, (int)this.Position.Y, (int)this.Extent.X, (int)this.Extent.Y, Color.White);
 
             var textDimensions = this.Font.MeasureString(this.Text.Length > 0 ? this.Text : " ");
             var letterWidth = textDimensions.X / (this.Text.Length > 0 ? this.Text.Length : 1);
