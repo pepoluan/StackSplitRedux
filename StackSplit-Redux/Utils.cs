@@ -1,4 +1,4 @@
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using System.Linq;
 
 namespace StackSplitRedux
@@ -6,8 +6,7 @@ namespace StackSplitRedux
     /// <summary>
     /// Convenience class so we don't have to keep passing Mod.Instance.Monitor everywhere
     /// </summary>
-    public static class Log
-        {
+    public static class Log {
         public static void Alert(string msg) => Mod.Instance.Monitor.Log(msg, LogLevel.Alert);
         public static void Error(string msg) => Mod.Instance.Monitor.Log(msg, LogLevel.Error);
         public static void Warn(string msg) => Mod.Instance.Monitor.Log(msg, LogLevel.Warn);
