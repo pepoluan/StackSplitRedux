@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StardewValley;
@@ -48,7 +48,7 @@ namespace StackSplitRedux.UI
         public bool NumbersOnly { get; set; } = false;
 
         /// <summary>Should the text be highlighted by default on construction so that additional input clears the existing text.</summary>
-        public bool HighlightByDefault { get; set; } = true; // TODO: make config option
+        public bool HighlightByDefault { get; set; } = true;
 
         /// <summary>The current text that was input.</summary>
         public string Text { get; private set; }
@@ -187,7 +187,7 @@ namespace StackSplitRedux.UI
 
             // Draw the highlight texture
             if (this.IsTextHighlighted && this.Text.Length > 0) {
-                var highlightPos = new Vector2(textPosition.X, textPosition.Y - Game1.pixelZoom);
+                var highlightPos = new Vector2(textPosition.X, textPosition.Y - Game1.pixelZoom);  // pixelZoom is for spacing
                 var destRect = new Rectangle((int)highlightPos.X, (int)highlightPos.Y, (int)textDimensions.X, (int)textDimensions.Y);
                 spriteBatch.Draw(this.HighlightTexture, destRect, this.HighlightColor * 0.75f);
                 }

@@ -44,9 +44,10 @@ namespace StackSplitRedux.UI
         /// <summary>Moves the caret to the specified index if it's within bounds.</summary>
         /// <param name="newIndex">The new caret index.</param>
         private void UpdateIndex(int newIndex, int textLength = 0) {
-            if (newIndex >= 0 &&
-                (this.MaxLength == 0 || newIndex < this.MaxLength) &&
-                (textLength == 0 || newIndex <= textLength)) {
+            if (newIndex >= 0
+                && (this.MaxLength == 0 || newIndex < this.MaxLength)
+                && (textLength == 0 || newIndex <= textLength)
+                ) {
                 this.Index = newIndex;
                 }
             }
