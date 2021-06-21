@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -31,12 +31,13 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="menu">Native shop menu.</param>
         /// <param name="item">Clicked item that this action will act on.</param>
         public ShopAction(ShopMenu menu, ISalable item) {
+            Log.TraceIfD($"[{nameof(ShopAction)}..ctor] Instantiating for menu = {menu}, item = {item}");
             this.NativeShopMenu = menu;
             this.ClickedItem = (Item)item;
 
             try {
                 this.Inventory = this.NativeShopMenu.inventory;
-                this.ShopCurrencyType = Mod.Reflection.GetField<int>(this.NativeShopMenu, "currency").GetValue();
+                this.ShopCurrencyType = this.NativeShopMenu.currency;
                 }
             catch (Exception e) {
                 Log.Error($"[{nameof(ShopAction)}..ctor] Failed to get native shop data. Exception:\n{e}");
