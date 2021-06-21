@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StardewValley;
@@ -11,6 +11,8 @@ namespace StackSplitRedux.UI
     /// <summary>Custom implementation of the NameMenu input text box that has additional functionality.</summary>
     public class InputTextBox : IKeyboardSubscriber
         {
+        private const int CARET_WIDTH = 4;
+
         // TODO: create proper event args
         /// <summary>Generic event.</summary>
         /// <param name="textbox">Textbox the event originated from.</param>
@@ -181,7 +183,7 @@ namespace StackSplitRedux.UI
             IClickableMenu.drawTextureBox(spriteBatch, Game1.menuTexture, menuTextureSourceRect, (int)this.Position.X, (int)this.Position.Y, (int)this.Extent.X, (int)this.Extent.Y, Color.White);
 
             var textDimensions = this.Font.MeasureString(this.Text.Length > 0 ? this.Text : " ");
-            var letterWidth = (textDimensions.X / (this.Text.Length > 0 ? this.Text.Length : 1));
+            var letterWidth = textDimensions.X / (this.Text.Length > 0 ? this.Text.Length : 1);
             var textPosition = this.Position + new Vector2(Game1.tileSize / 4, Game1.tileSize / 3);
 
             // Draw the highlight texture
@@ -196,13 +198,15 @@ namespace StackSplitRedux.UI
             spriteBatch.DrawString(this.Font, this.Text, textPosition, textColor);
 
             // Draw the caret
-            int caretX = ((int)letterWidth * this.Caret.Index);
+            int caretX = (int)letterWidth * this.Caret.Index;
             // Offset by a small amount when were not at the end so the caret doesn't go on top of the letter
             caretX = (this.Caret.Index < this.Text.Length) ? caretX - Game1.pixelZoom : caretX;
             spriteBatch.Draw(Game1.staminaRect,
-                new Rectangle((int)this.Position.X + (Game1.tileSize / 4) + caretX + Game1.pixelZoom,
-                              (int)this.Position.Y + (Game1.tileSize / 3) - Game1.pixelZoom, 4,
-                              (int)textDimensions.Y),
+                new Rectangle(
+                    (int)this.Position.X + (Game1.tileSize / 4) + caretX + Game1.pixelZoom,
+                    (int)this.Position.Y + (Game1.tileSize / 3) - Game1.pixelZoom,
+                    CARET_WIDTH,
+                    (int)textDimensions.Y),
                 this.TextColor);
             }
 
@@ -230,8 +234,10 @@ namespace StackSplitRedux.UI
         /// <summary>Checks if the character is able to be appended to the text.</summary>
         /// <param name="c">The character to append.</param>
         private bool CanAppendChar(char c) {
-            return ((this.CharacterLimit == 0 || this.Text.Length < this.CharacterLimit) &&
-                    (!this.NumbersOnly || char.IsDigit(c)));
+            return
+                (this.CharacterLimit == 0 || this.Text.Length < this.CharacterLimit)
+                && (!this.NumbersOnly || char.IsDigit(c))
+                ;
             }
 
         /// <summary>Checks if the string is valid.</summary>
