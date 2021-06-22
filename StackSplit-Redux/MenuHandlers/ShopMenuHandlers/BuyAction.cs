@@ -45,8 +45,7 @@ namespace StackSplitRedux.MenuHandlers
             Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}");
 
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
-            var priceAndStockField = Mod.Reflection.GetField<Dictionary<ISalable, int[]>>(nativeMenu, "itemPriceAndStock");
-            var priceAndStockMap = priceAndStockField.GetValue();
+            Dictionary<ISalable, int[]> priceAndStockMap = nativeMenu.itemPriceAndStock;
             Debug.Assert(priceAndStockMap.ContainsKey(chosen));
 
             // Calculate the number to purchase
@@ -86,11 +85,8 @@ namespace StackSplitRedux.MenuHandlers
                 Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Item is limited, reducing stock");
                 // remove the purchased item from the stock etc.
                 priceAndStockMap.Remove(chosen);
-                priceAndStockField.SetValue(priceAndStockMap);
-                var itemsForSaleField = Mod.Reflection.GetField<List<ISalable>>(nativeMenu, "forSale");
-                var itemsForSale = itemsForSaleField.GetValue();
+                List<ISalable> itemsForSale = nativeMenu.forSale;
                 itemsForSale.Remove(chosen);
-                itemsForSaleField.SetValue(itemsForSale);
                 }
             }
 

@@ -39,7 +39,7 @@ namespace StackSplitRedux.MenuHandlers
         public override void Open(IClickableMenu menu) {
             base.Open(menu);
 
-            this.Tabs = Mod.Reflection.GetField<List<ClickableComponent>>(this.NativeMenu, "tabs").GetValue();
+            this.Tabs = this.NativeMenu.tabs;
 
             if (!ChangeTabs(this.CurrentTab)) {
                 Log.Trace($"[{nameof(GameMenuHandler)}.{nameof(Open)}] Could not change to tab {this.CurrentTab}");
@@ -133,7 +133,7 @@ namespace StackSplitRedux.MenuHandlers
             this.PreviousTab = newTab;
             this.CurrentPageHandler = pageHandler;
 
-            var pages = Mod.Reflection.GetField<List<IClickableMenu>>(this.NativeMenu, "pages").GetValue();
+            var pages = this.NativeMenu.pages;
             pageHandler.Open(this.NativeMenu, pages[newTab], this.Inventory);
 
             return true;
