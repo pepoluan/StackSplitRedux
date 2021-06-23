@@ -214,6 +214,7 @@ namespace StackSplitRedux.MenuHandlers
                 return;
 
             try {
+                // Have to use Reflection here because IClickableMenu does not define .inventory nor .hoveredItem
                 var inventoryMenu = this.NativeMenu.GetType().GetField("inventory").GetValue(this.NativeMenu) as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.NativeMenu, "hoveredItem");
 

@@ -1,5 +1,4 @@
-﻿using StardewModdingAPI;
-using StardewValley;
+﻿using StardewValley;
 using StardewValley.Menus;
 using System;
 
@@ -51,6 +50,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Initializes the inventory using the most common variable names.</summary>
         public virtual void InitInventory() {
             try {
+                // Have to use Reflection here because IClickableMenu does not define .inventory nor .hoveredItem
                 var inventoryMenu = this.MenuPage.GetType().GetField("inventory").GetValue(this.MenuPage) as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoveredItem");
 
