@@ -73,7 +73,7 @@ namespace StackSplitRedux.MenuHandlers
 #if DEBUG
             List<Item> extraItems = new();
             foreach (SChest chest in this.MenuPage._materialContainers) {
-                Log.TraceIfD($"Engrabbening {chest}");
+                Log.TraceIfD($"Engrabbening {chest} @ {chest.TileLocation} (fridge = {chest.fridge.Value})");
                 extraItems.AddRange(chest.items);
                 }
 #else
