@@ -7,7 +7,7 @@
   "EntryDll": "StackSplit-Redux.dll",
   "MinimumApiVersion": "3.8.0",
   "UpdateKeys": [ "Nexus:8967" ],
-  "Meta:License": "MPL-2.0",
+  "Meta:License": "MIT",
   "Meta:ChangeLog": {
     "0.9.0": "Initial release",
     "0.10.0": "Lots of minor improvements",
