@@ -1,7 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using StardewModdingAPI;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
+//using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
+using System.Collections.Generic;
+
+using SChest = StardewValley.Objects.Chest;
+//using SLocation = StardewValley.GameLocation;
+//using StardewValley.Locations;
+//using System;
+//using System.Reflection;
 
 namespace StackSplitRedux.MenuHandlers
     {
@@ -51,14 +59,81 @@ namespace StackSplitRedux.MenuHandlers
             if (hoveredItem == null || (heldItem != null && heldItem.Name != hoveredItem.Name))
                 return EInputHandled.NotHandled;
 
+            // Grab ingredients
+            // Because of Workbenches + kitchen stove superpower, we need to look at many places, not just backpack
+            //IEnumerable<Item> extraItems = null;
+            //if (cooking) {
+            //    extraItems = GetFridgeItems();
+            //    }
+            //else {  // Workbench + connected chests
+            //    // No need to search/filter for "chests only in this location"; that should already be done when
+            //    // populating _materialContainers (either by game code or by mods such as "Better Workbenches"
+            //    extraItems = this.MenuPage._materialContainers?.SelectMany(chest => chest.items);
+            //    }
+#if DEBUG
+            List<Item> extraItems = new();
+            foreach (SChest chest in this.MenuPage._materialContainers) {
+                Log.TraceIfD($"Engrabbening {chest}");
+                extraItems.AddRange(chest.items);
+                }
+#else
+            IEnumerable<Item> extraItems = this.MenuPage._materialContainers?.SelectMany(chest => chest.items);
+#endif
+
             // Only allow items that can actually stack
-            var extraIems = cooking ? Utility.getHomeOfFarmer(Game1.player).fridge.Value.items : null;
-            if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraIems))
+            if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraItems?.ToList()))
                 return EInputHandled.NotHandled;
 
             this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
             return EInputHandled.Consumed;
             }
+
+        ///// <summary>
+        ///// Retrieve all items in fridges, minifridges, and if EternalSoap.RemoteFridgeStorage is loaded,
+        ///// from ... all those connected storageboxen
+        ///// </summary>
+        ///// <returns></returns>
+        //private IEnumerable<Item> GetFridgeItems() {
+        //    List<Item> result = new();
+        //    var curloc = Game1.player.currentLocation;
+        //    // Careful not to merge the fridges on FarmHouse and IslandFarmHouse
+        //    SLocation house;
+        //    if (curloc is FarmHouse farmhouse) {
+        //        result.AddRange(farmhouse.fridge.Value.items);
+        //        house = farmhouse;
+        //        }
+        //    else if (curloc is IslandFarmHouse islafarmhouse) {
+        //        result.AddRange(islafarmhouse.fridge.Value.items);
+        //        house = islafarmhouse;
+        //        }
+        //    else {
+        //        return null;
+        //        }
+        //    if (Mod.Registry.IsLoaded("EternalSoap.RemoteFridgeStorage")) {
+        //        // code by blueberry 🍰 @rhubarb#4755 on Discord
+        //        // https://discord.com/channels/137344473976799233/156109690059751424/856079674970865685
+        //        Type modRFS = Type.GetType("RemoteFridgeStorage.ModEntry, RemoteFridgeStorage");
+        //        object instance = modRFS.GetProperty("Instance",
+        //          bindingAttr: BindingFlags.Public | BindingFlags.Static)
+        //          .GetValue(null);
+        //        object field = modRFS.GetField("ChestController")
+        //          .GetValue(instance);
+        //        HashSet<SChest> chests = field.GetType().InvokeMember("GetChests",
+        //          invokeAttr: BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Instance,
+        //          binder: null,
+        //          target: field,
+        //          args: null) as HashSet<SChest>;
+        //        result.AddRange(chests.SelectMany(c => c.items));
+        //        }
+        //    else {
+        //        result.AddRange(
+        //            house.Objects.Values.OfType<SChest>()
+        //                .Where(c => c.bigCraftable.Value && c.ParentSheetIndex == 216)  // Magic spell to select mini-fridges
+        //                .SelectMany(chest => chest.items)
+        //            );
+        //        }
+        //    return result;
+        //    }
 
         /// <summary>Lets the handler run the logic for doing the split after the amount has been input.</summary>
         /// <param name="amount">The stack size the user requested.</param>
