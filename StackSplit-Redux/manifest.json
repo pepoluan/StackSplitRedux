@@ -1,7 +1,7 @@
 {
   "Name": "Stack Split Redux",
   "Author": "pepoluan, tstaples (original idea)",
-  "Version": "0.11.0",
+  "Version": "0.12.0",
   "Description": "Custom stack splitting, originally known as StackSplitX",
   "UniqueID": "pepoluan.StackSplitRedux",
   "EntryDll": "StackSplit-Redux.dll",
@@ -13,6 +13,7 @@
     "0.10.0": "Lots of minor improvements",
     "0.10.1": "Bugfix for crafting pages",
     "0.10.2": "Fix updatekeys",
-    "0.11.0": "Internal improvements"
+    "0.11.0": "Internal improvements",
+    "0.12.0": "Add support for Workbench + Cooking"
   }
 }
