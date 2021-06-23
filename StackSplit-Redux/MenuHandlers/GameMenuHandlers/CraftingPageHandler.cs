@@ -74,11 +74,11 @@ namespace StackSplitRedux.MenuHandlers
                 extraItems.AddRange(chest.items);
                 }
 #else
-            IEnumerable<Item> extraItems = this.MenuPage._materialContainers?.SelectMany(chest => chest.items);
+            List<Item> extraItems = this.MenuPage._materialContainers?.SelectMany(chest => chest.items).ToList();
 #endif
 
             // Only allow items that can actually stack
-            if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraItems?.ToList()))
+            if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraItems))
                 return EInputHandled.NotHandled;
 
             this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
