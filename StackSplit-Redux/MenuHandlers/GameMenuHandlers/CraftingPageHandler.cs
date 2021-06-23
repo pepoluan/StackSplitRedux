@@ -18,6 +18,9 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Used to track if the inventory or crafting menu recieved input last.</summary>
         private bool WasInventoryClicked = false;
 
+        /// <summary>Maximum possible amount for crafting/cooking item selected</summary>
+        private int MaxAmount;
+
         /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public CraftingPageHandler()
             : base() {
@@ -81,6 +84,7 @@ namespace StackSplitRedux.MenuHandlers
             if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraItems))
                 return EInputHandled.NotHandled;
 
+            this.MaxAmount = hoverRecipe.getCraftableCount(extraItems);
             this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
             return EInputHandled.Consumed;
             }
@@ -141,9 +145,18 @@ namespace StackSplitRedux.MenuHandlers
                 return;
                 }
 
-            // TODO: check the max amonut able to be crafted to avoid unnecessary iterations
-            for (int i = 0; i < amount; ++i) {
-                this.MenuPage.receiveRightClick(this.ClickItemLocation.X, this.ClickItemLocation.Y);
+            int count = Math.Min(amount, this.MaxAmount);
+            ISoundBank origSoundBank = Game1.soundBank;
+            for (int i = 0; i < count; ++i) {
+                // Only play sound for the very first RightClick, or else the sound will mix together and sounds horrible
+                if (i > 0) Game1.soundBank = null;
+                this.MenuPage.receiveRightClick(this.ClickItemLocation.X, this.ClickItemLocation.Y, playSound: i == 0);
+                Game1.soundBank = origSoundBank;
+                // NOTE: This nullify-then-restore tactic is needed because as of SDV 1.5.4, CraftingPage.receiveRightClick actually
+                //       *ignores* the playSound parameter; it's supposed to pass that parameter to CraftingPage.clickCraftingRecipe,
+                //       but it doesn't. So the same sound gets layered one atop another with a slight shift, resulting in an overly
+                //       loud and very distorted blip.
+                //       If this oversight is fixed in a future patch, we can remove the nullify-and-restore lines.
                 }
             }
         }
