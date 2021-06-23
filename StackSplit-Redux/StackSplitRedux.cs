@@ -6,8 +6,9 @@ using StardewValley.Menus;
 
 namespace StackSplitRedux
     {
-    public class StackSplit
-        {
+    public class StackSplit {
+        private const int TICKS_DELAY_OPEN = 2;
+
         /// <summary>Are we subscribed to the events listened to while a handler is active.</summary>
         private bool IsSubscribed = false;
 
@@ -22,6 +23,9 @@ namespace StackSplitRedux
 
         /// <summary>Tracks what tick a resize event occurs on so we can resize the current handler next frame. -1 means no resize event.</summary>
         private int TickResizedOn = -1;
+
+        private IClickableMenu MenuToHandle;
+        private int WaitOpenTicks = 0;
 
         public StackSplit() {
             PrepareMapping();
@@ -82,13 +86,13 @@ namespace StackSplitRedux
                 Log.TraceIfD($"{nuMenu} intercepted");
                 // Close the current one of it's valid
                 if (this.CurrentMenuHandler != null) {
+                    DequeueMenuHandlerOpener();
                     this.CurrentMenuHandler.Close();
                     }
 
-                this.CurrentMenuHandler = handler;
-                this.CurrentMenuHandler.Open(nuMenu);
-
-                SubscribeHandlerEvents();
+                //this.CurrentMenuHandler = handler;
+                //this.CurrentMenuHandler.Open(nuMenu);
+                EnqueueMenuHandlerOpener(nuMenu, handler);
                 }
             else {
                 Log.TraceIfD($"{nuMenu} not intercepted, don't know how");
@@ -128,6 +132,27 @@ namespace StackSplitRedux
                 }
 
             this.CurrentMenuHandler?.Update();
+            }
+
+        private void EnqueueMenuHandlerOpener(IClickableMenu newMenu, IMenuHandler handler) {
+            if (WaitOpenTicks > 0) return;
+            Log.TraceIfD($"MenuHandlerOpener enregistered & enqueued");
+            this.MenuToHandle = newMenu;
+            this.CurrentMenuHandler = handler;
+            Mod.Events.GameLoop.UpdateTicked += MenuHandlerOpener;
+            }
+
+        private void DequeueMenuHandlerOpener() {
+            Mod.Events.GameLoop.UpdateTicked -= MenuHandlerOpener;
+            WaitOpenTicks = 0;
+            }
+
+        private void MenuHandlerOpener(object sender, UpdateTickedEventArgs e) {
+            if (WaitOpenTicks++ >= TICKS_DELAY_OPEN) {
+                DequeueMenuHandlerOpener();
+                this.CurrentMenuHandler.Open(this.MenuToHandle);
+                SubscribeHandlerEvents();
+                }
             }
 
         private void OnGameLaunched(object semder, GameLaunchedEventArgs e) {
