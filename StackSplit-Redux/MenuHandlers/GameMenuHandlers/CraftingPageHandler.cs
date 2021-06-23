@@ -29,7 +29,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Initializes the inventory using the most common variable names.</summary>
         public override void InitInventory() {
             // We need to do this explicitly because the crafting page uses a different variable name for hover item.
-            var inventoryMenu = this.MenuPage.GetType().GetField("inventory").GetValue(this.MenuPage) as InventoryMenu;
+            var inventoryMenu = this.MenuPage.inventory;
             var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoverItem");
 
             this.Inventory.Init(inventoryMenu, hoveredItemField);
