@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+using System;
+using System.Linq;  // Don't remove this; will activate if Config = Release
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
