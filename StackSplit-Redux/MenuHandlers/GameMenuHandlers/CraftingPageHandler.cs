@@ -1,15 +1,12 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-//using StardewModdingAPI;
+
 using StardewValley;
 using StardewValley.Menus;
-using System.Collections.Generic;
 
 using SChest = StardewValley.Objects.Chest;
-//using SLocation = StardewValley.GameLocation;
-//using StardewValley.Locations;
-//using System;
-//using System.Reflection;
 
 namespace StackSplitRedux.MenuHandlers
     {
