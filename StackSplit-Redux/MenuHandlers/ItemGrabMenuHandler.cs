@@ -92,7 +92,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.HoverItem = this.NativeMenu.hoveredItem;
                 }
             catch (Exception e) {
-                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(OpenSplitMenu)}] Failed to get properties from native menu: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(OpenSplitMenu)}] Had an exception:\n{e}");
                 return EInputHandled.NotHandled;
                 }
 
@@ -209,7 +209,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.CallbacksHooked = true;
                 }
             catch (Exception e) {
-                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(HookCallbacks)}] Failed to hook ItemGrabMenu callbacks: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(HookCallbacks)}] Failed to hook ItemGrabMenu callbacks:\n{e}");
                 return false;
                 }
             return true;
@@ -230,7 +230,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.CallbacksHooked = false;
                 }
             catch (Exception e) {
-                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(RestoreNativeCallbacks)}] Failed to restore native callbacks: {e}");
+                Log.Error($"[{nameof(ItemGrabMenuHandler)}.{nameof(RestoreNativeCallbacks)}] Failed to restore native callbacks:\n{e}");
                 }
             }
         }

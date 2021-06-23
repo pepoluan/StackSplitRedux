@@ -42,7 +42,7 @@ namespace StackSplitRedux.MenuHandlers
             var chosen_max = chosen.maximumStackSize();
             var nativeMenu = this.NativeShopMenu;
 
-            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}");
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}");
 
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
             Dictionary<ISalable, int[]> priceAndStockMap = nativeMenu.itemPriceAndStock;
@@ -50,17 +50,21 @@ namespace StackSplitRedux.MenuHandlers
 
             // Calculate the number to purchase
             int[] stockData = priceAndStockMap[chosen];
-            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen stockData = {string.Join(", ", stockData)}");
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen stockData = {string.Join(", ", stockData)}");
             int numInStock = stockData[1];
             int itemPrice = stockData[0];
             int currentMonies;
             if (itemPrice > 0) {  // using money
                 currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
+                Log.TraceIfD($"player has {currentMonies} of currency {this.ShopCurrencyType}");
                 }
             else {  // barter system. "monies" is now the wanted barter item in [2]
                 itemPrice = stockData[3];
-                currentMonies = Game1.player.getItemCount(stockData[2]);
+                var barterItem = stockData[2];
+                currentMonies = Game1.player.getItemCount(barterItem);
+                Log.TraceIfD($"Barter system: player has {currentMonies} of item {barterItem}");
                 }
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen item price is {itemPrice}");
             Debug.Assert(itemPrice > 0);
 
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
@@ -73,10 +77,10 @@ namespace StackSplitRedux.MenuHandlers
             Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Attempting to purchase {amount} of {chosen.Name} for {itemPrice * amount}");
 
             if (amount <= 0) {
-                Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] amount <= 0, purchase aborted");
+                Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] amount <= 0, purchase aborted");
                 return;
                 }
-            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchase of {amount} {chosen.Name} successful");
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchase of {amount} {chosen.Name} successful");
 
             // Try to purchase the item - method returns true if it should be removed from the shop since there's no more.
             var purchaseMethod = Mod.Reflection.GetMethod(nativeMenu, "tryToPurchaseItem");
