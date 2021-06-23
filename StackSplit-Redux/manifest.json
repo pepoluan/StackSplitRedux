@@ -1,7 +1,7 @@
 {
   "Name": "Stack Split Redux",
   "Author": "pepoluan, tstaples (original idea)",
-  "Version": "0.12.1",
+  "Version": "0.13.0",
   "Description": "Custom stack splitting, originally known as StackSplitX",
   "UniqueID": "pepoluan.StackSplitRedux",
   "EntryDll": "StackSplit-Redux.dll",
@@ -16,6 +16,7 @@
     "0.10.2": "Fix updatekeys",
     "0.11.0": "Internal improvements",
     "0.12.0": "Add support for Workbench + Cooking",
-    "0.12.1": "Internal optimizations for CraftingPageHandler"
+    "0.12.1": "Internal optimizations for CraftingPageHandler, Play sound only once for crafting/cooking",
+    "0.13.0": "Implement GMCM support"
   }
 }
