@@ -27,6 +27,8 @@ namespace StackSplitRedux
         private IClickableMenu MenuToHandle;
         private int WaitOpenTicks = 0;
 
+        private ModConfigMenu ConfigMenu;
+
         public StackSplit() {
             PrepareMapping();
             RegisterEvents();
@@ -34,6 +36,10 @@ namespace StackSplitRedux
 
         ~StackSplit() {
             Log.Error($"[{nameof(StackSplit)}] We got finalized! How come??");
+            }
+
+        public void PrepareModConfigMenu() {
+            this.ConfigMenu = new ModConfigMenu();
             }
 
         public void PrepareMapping() {
@@ -156,6 +162,7 @@ namespace StackSplitRedux
             }
 
         private void OnGameLaunched(object semder, GameLaunchedEventArgs e) {
+            PrepareModConfigMenu();
             InterceptOtherMods();
             }
 
