@@ -56,8 +56,8 @@ namespace StackSplitRedux.MenuHandlers
 
                 // Messy because it's a direct copy-paste from the source code
                 Vector2 value = this.Inventory.snapToClickableComponent(clickLocation.X, clickLocation.Y);
-                var moneyBoxStartingPoint = new Point((int)value.X + 32, (int)value.Y + 32);
-                var moneyBoxEndingPoint = Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f);
+                var startingPoint = new Point((int)value.X + 32, (int)value.Y + 32);
+                var endingPoint = Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f);
                 animations.Add(
                     new TemporaryAnimatedSprite(
                         textureName: Game1.debrisSpriteSheet.Name, 
@@ -70,8 +70,8 @@ namespace StackSplitRedux.MenuHandlers
                         flipped: false
                         ) {
                             alphaFade = 0.025f,
-                            motion = Utility.getVelocityTowardPoint(moneyBoxStartingPoint, moneyBoxEndingPoint, 12f),
-                            acceleration = Utility.getVelocityTowardPoint(moneyBoxStartingPoint, moneyBoxEndingPoint, 0.5f)
+                            motion = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 12f),
+                            acceleration = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 0.5f)
                             }
                     );
 
