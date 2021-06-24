@@ -20,7 +20,7 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Null constructor that currently only logs instantiation</summary>
         public GameMenuPageHandler() {
-            Log.TraceIfD($"[{nameof(GameMenuPageHandler<TPageType>)}] Instatiated with TPageType = {typeof(TPageType)}");
+            Log.TraceIfD($"[{nameof(GameMenuPageHandler<TPageType>)}] Instantiated with TPageType = {typeof(TPageType)}");
             }
 
         ~GameMenuPageHandler() {
