@@ -10,5 +10,6 @@ namespace StackSplitRedux
         {
         public int DefaultCraftingAmount { get; set; } = 1;
         public int DefaultShopAmount { get; set; } = 5;
+        public bool DebuggingMode { get; set; } = false;
         }
     }

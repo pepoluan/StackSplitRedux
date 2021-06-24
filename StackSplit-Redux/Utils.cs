@@ -15,8 +15,11 @@ namespace StackSplitRedux
         public static void Trace(string msg) => Mod.Instance.Monitor.Log(msg, LogLevel.Trace);
         public static void TraceIfD(string msg) {
 #if DEBUG
-            Trace(msg);
+            bool debugging = true;
+#else
+            bool debugging = Mod.Config.DebuggingMode;
 #endif
+            if (debugging) Trace(msg);
             }
         }
     public static class Seq {
