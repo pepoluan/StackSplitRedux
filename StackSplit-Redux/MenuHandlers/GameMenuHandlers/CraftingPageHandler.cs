@@ -59,6 +59,8 @@ namespace StackSplitRedux.MenuHandlers
             if (hoveredItem == null || (heldItem != null && heldItem.Name != hoveredItem.Name))
                 return EInputHandled.NotHandled;
 
+            // We might need to put in some mutex-wrangling here if there' a problem with MultiPlayer desyncs...
+
             // Grab ingredients
 #if DEBUG
             List<Item> extraItems = new();
