@@ -64,7 +64,6 @@ namespace StackSplitRedux
         private readonly IGenericModConfigMenuAPI Api;
         private readonly IManifest ModManifest;
         private readonly IModHelper Helper;
-        private ModConfig Config = Mod.Config;
 
         internal ModConfigMenu() {
             this.Api = Mod.Registry.GetApi<IGenericModConfigMenuAPI>("spacechase0.GenericModConfigMenu");
@@ -80,8 +79,8 @@ namespace StackSplitRedux
         void RegisterMenu() {
             this.Api.RegisterModConfig(
                 this.ModManifest,
-                () => this.Config = new ModConfig(),
-                () => this.Helper.WriteConfig<ModConfig>(Config)
+                () => Mod.Config = new ModConfig(),
+                () => this.Helper.WriteConfig<ModConfig>(Mod.Config)
                 );
 
             this.Api.SetDefaultIngameOptinValue(this.ModManifest, true);
@@ -91,16 +90,16 @@ namespace StackSplitRedux
                 this.ModManifest,
                 "Default cooking/crafting amount",
                 "The default amount when you Shift+RightClick in the Cooking / Crafting menu",
-                () => this.Config.DefaultCraftingAmount,   // a function with no input, but outputs value of type T
-                (int value) => this.Config.DefaultCraftingAmount = value
+                () => Mod.Config.DefaultCraftingAmount,   // a function with no input, but outputs value of type T
+                (int value) => Mod.Config.DefaultCraftingAmount = value
                 );
 
             this.Api.RegisterSimpleOption(
                 this.ModManifest,
                 "Default shop amount",
                 "The default amount when you Shift+RightClick in a Shop menu",
-                () => this.Config.DefaultShopAmount,   // a function with no input, but outputs value of type T
-                (int value) => this.Config.DefaultShopAmount = value
+                () => Mod.Config.DefaultShopAmount,   // a function with no input, but outputs value of type T
+                (int value) => Mod.Config.DefaultShopAmount = value
                 );
 
             }
