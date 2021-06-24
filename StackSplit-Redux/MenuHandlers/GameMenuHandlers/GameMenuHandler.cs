@@ -67,7 +67,8 @@ namespace StackSplitRedux.MenuHandlers
                 : EInputHandled.NotHandled;
             }
 
-        /// <summary>Tells the handler to close the split menu.</summary>
+        /// <summary>Additional checks before opening the split menu.</summary>
+        /// <returns>True if it can be opened.</returns>
         protected override bool CanOpenSplitMenu() {
             // Check the current tab is valid
             return this.PageHandlers.ContainsKey(this.CurrentTab);
