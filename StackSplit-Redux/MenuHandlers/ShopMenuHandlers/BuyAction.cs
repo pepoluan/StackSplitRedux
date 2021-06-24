@@ -107,7 +107,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="p">Mouse location.</param>
         /// <returns>The clicked item or null if none was clicked.</returns>
         public static ISalable GetClickedShopItem(ShopMenu shopMenu, Point p) {
-            var itemsForSale = Mod.Reflection.GetField<List<ISalable>>(shopMenu, "forSale").GetValue();
+            var itemsForSale = shopMenu.forSale;
             int index = GetClickedItemIndex(shopMenu, p);
             Debug.Assert(index < itemsForSale.Count);
             return index >= 0 ? itemsForSale[index] : null;
@@ -118,7 +118,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="p">Mouse location.</param>
         /// <returns>The clicked item or null if none was clicked.</returns>
         public static int GetClickedItemIndex(ShopMenu shopMenu, Point p) {
-            int currentItemIndex = Mod.Reflection.GetField<int>(shopMenu, "currentItemIndex").GetValue();
+            int currentItemIndex = shopMenu.currentItemIndex;
             int saleButtonIndex = shopMenu.forSaleButtons.FindIndex(button => button.containsPoint(p.X, p.Y));
             return saleButtonIndex > -1 ? currentItemIndex + saleButtonIndex : -1;
             }
