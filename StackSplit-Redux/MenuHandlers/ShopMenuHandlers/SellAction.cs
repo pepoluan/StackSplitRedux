@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -94,17 +94,15 @@ namespace StackSplitRedux.MenuHandlers
         private int CalculateSalePrice(Item item, int amount) {
             // Formula from ShopMenu.cs
             float sellPercentage = Mod.Reflection.GetField<float>(this.NativeShopMenu, "sellPercentage").GetValue();
-            int price;
-            if (item is StardewValley.Object) {
-                float sellPrice = (item as StardewValley.Object).sellToStorePrice();
-                price = (int)(sellPrice * sellPercentage) * amount;
-                }
-            else {
-                price = (int)(item.salePrice() * 0.5f * sellPercentage) * amount;
-                }
+
+            float pricef = sellPercentage * amount;
+            pricef *= item is StardewValley.Object sobj
+                ? sobj.sellToStorePrice()
+                : item.salePrice() * 0.5f
+                ;
 
             // Invert so we give the player money instead (shitty but it's what the game does).
-            return -price;
+            return -(int)pricef;
             }
 
         /// <summary>Creates an instance of the action.</summary>
