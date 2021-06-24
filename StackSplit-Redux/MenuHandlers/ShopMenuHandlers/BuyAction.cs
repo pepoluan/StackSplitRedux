@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -97,8 +97,7 @@ namespace StackSplitRedux.MenuHandlers
                 Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Item is limited, reducing stock");
                 // remove the purchased item from the stock etc.
                 priceAndStockMap.Remove(chosen);
-                List<ISalable> itemsForSale = nativeMenu.forSale;
-                itemsForSale.Remove(chosen);
+                nativeMenu.forSale.Remove(chosen);
                 }
             }
 
