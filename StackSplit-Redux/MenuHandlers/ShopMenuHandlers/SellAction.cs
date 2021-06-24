@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
 using System;
@@ -8,6 +8,8 @@ namespace StackSplitRedux.MenuHandlers
     {
     public class SellAction : ShopAction
         {
+        private readonly Guid GUID = Guid.NewGuid();
+
         /// <summary>Constructs an instance.</summary>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
@@ -16,6 +18,11 @@ namespace StackSplitRedux.MenuHandlers
             // Default amount
             // +1 before /2 ensures we get the number rounded UP
             this.Amount = (this.ClickedItem.Stack + 1) / 2;
+            Log.TraceIfD($"[{nameof(SellAction)}] Instantiated for shop {menu} item {item}, GUID = {GUID}");
+            }
+
+        ~SellAction() {
+            Log.TraceIfD($"[{nameof(SellAction)}] Finalized for GUID = {GUID}");
             }
 
         /// <summary>Verifies the conditions to perform te action.</summary>
