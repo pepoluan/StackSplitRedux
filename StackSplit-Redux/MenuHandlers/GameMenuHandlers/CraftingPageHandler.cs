@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;  // Don't remove this; will activate if Config = Release
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -62,15 +61,12 @@ namespace StackSplitRedux.MenuHandlers
             // We might need to put in some mutex-wrangling here if there' a problem with MultiPlayer desyncs...
 
             // Grab ingredients
-#if DEBUG
             List<Item> extraItems = new();
+            // Not using .SelectMany() but iterating manually so we can trigger TraceIfD (optionally if Config = Release)
             foreach (SChest chest in this.MenuPage._materialContainers) {
                 Log.TraceIfD($"Engrabbening {chest} @ {chest.TileLocation} (fridge = {chest.fridge.Value})");
                 extraItems.AddRange(chest.items);
                 }
-#else
-            List<Item> extraItems = this.MenuPage._materialContainers?.SelectMany(chest => chest.items).ToList();
-#endif
 
             // Only allow items that can actually stack
             if (!hoveredItem.canStackWith(hoveredItem) || !hoverRecipe.doesFarmerHaveIngredientsInInventory(extraItems))
