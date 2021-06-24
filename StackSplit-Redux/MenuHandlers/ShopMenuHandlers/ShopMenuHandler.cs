@@ -5,6 +5,8 @@ namespace StackSplitRedux.MenuHandlers
     {
     public class ShopMenuHandler : BaseMenuHandler<ShopMenu>
         {
+        public const float RIGHT_CLICK_POLLING_INTVL = 300f;
+
         /// <summary>The shop action for the current operation.</summary>
         private IShopAction CurrentShopAction = null;
 
@@ -41,7 +43,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>How long the right click has to be held for before the receiveRIghtClick gets called rapidly (See Game1.Update)</summary>
         /// <returns>The polling interval.</returns>
         protected override float GetRightClickPollingInterval() {
-            return 300f; // From ShopMenu.receiveRightClick
+            return RIGHT_CLICK_POLLING_INTVL; // From ShopMenu.receiveRightClick
             }
 
         /// <summary>Called when the current handler loses focus when the split menu is open, allowing it to cancel the operation or run the default behaviour.</summary>
