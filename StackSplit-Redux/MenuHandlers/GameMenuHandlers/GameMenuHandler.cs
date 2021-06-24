@@ -1,4 +1,4 @@
-using StackSplitRedux.UI;
+﻿using StackSplitRedux.UI;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -93,7 +93,7 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>Passes the input to the page handler.</summary>
-        /// <param name="s">Stack amount the user input.</param>
+        /// <param name="s">Stack amount inputted by user.</param>
         protected override void OnStackAmountReceived(string s) {
             if (int.TryParse(s, out int amount)) {
                 this.CurrentPageHandler.OnStackAmountEntered(amount);
@@ -125,6 +125,7 @@ namespace StackSplitRedux.MenuHandlers
             CloseCurrentHandler();
 
             if (!PageHandlers.TryGetValue(newTab, out IGameMenuPageHandler pageHandler)) {
+                // Please note that this is NOT AN ERROR
                 Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] No handler for tab {newTab}");
                 return false;
                 }
