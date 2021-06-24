@@ -82,13 +82,12 @@ namespace StackSplitRedux.MenuHandlers
             int numHeld = heldItem?.Stack ?? 0;
             if ((numHeld + amount) > chosen_max) amount = chosen_max - numHeld;
 
-            Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Attempting to purchase {amount} of {chosen.Name} for {itemPrice * amount}");
-
             if (amount <= 0) {
-                Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] amount <= 0, purchase aborted");
+                Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] purchasable amount <= 0, purchase aborted");
                 return;
                 }
-            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchase of {amount} {chosen.Name} successful");
+
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchasing {amount} of {chosen.Name} for {itemPrice * amount}");
 
             // Try to purchase the item - method returns true if it should be removed from the shop since there's no more.
             var purchaseMethod = Mod.Reflection.GetMethod(nativeMenu, "tryToPurchaseItem");
