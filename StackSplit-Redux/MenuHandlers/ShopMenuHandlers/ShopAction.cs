@@ -53,7 +53,7 @@ namespace StackSplitRedux.MenuHandlers
             return this.Amount;
             }
 
-        /// <summary>Verifies the conditions to perform te action.</summary>
+        /// <summary>Verifies the conditions to perform the action.</summary>
         public abstract bool CanPerformAction();
 
         /// <summary>Does the action.</summary>

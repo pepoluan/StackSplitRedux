@@ -26,7 +26,7 @@ namespace StackSplitRedux.MenuHandlers
             Log.TraceIfD($"[{nameof(BuyAction)}] Finalized for GUID = {GUID}");
             }
 
-        /// <summary>Verifies the conditions to perform te action.</summary>
+        /// <summary>Verifies the conditions to perform the action.</summary>
         public override bool CanPerformAction() {
             var held = Mod.Reflection.GetField<Item>(this.NativeShopMenu, "heldItem").GetValue();
             int currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);

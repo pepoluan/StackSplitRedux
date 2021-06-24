@@ -25,7 +25,7 @@ namespace StackSplitRedux.MenuHandlers
             Log.TraceIfD($"[{nameof(SellAction)}] Finalized for GUID = {GUID}");
             }
 
-        /// <summary>Verifies the conditions to perform te action.</summary>
+        /// <summary>Verifies the conditions to perform the action.</summary>
         public override bool CanPerformAction() {
             return (this.NativeShopMenu.highlightItemToSell(this.ClickedItem) && this.ClickedItem.Stack > 1);
             }
