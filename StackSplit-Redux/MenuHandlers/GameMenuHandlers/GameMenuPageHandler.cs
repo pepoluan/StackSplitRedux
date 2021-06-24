@@ -51,7 +51,10 @@ namespace StackSplitRedux.MenuHandlers
         public virtual void InitInventory() {
             try {
                 // Have to use Reflection here because IClickableMenu does not define .inventory nor .hoveredItem
-                var inventoryMenu = this.MenuPage.GetType().GetField("inventory").GetValue(this.MenuPage) as InventoryMenu;
+                // (Subclasses of IClickableMenu that have .HasInventory == true DO define .inventory & .hoveredItem,
+                // but they do not define an interface for that, so it's either trying to cast to those subclasses
+                // one-by-one, or simply use Reflection to fetch the fields.
+                var inventoryMenu = Mod.Reflection.GetField<Type>(this.MenuPage, "inventory") as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoveredItem");
 
                 this.Inventory.Init(inventoryMenu, hoveredItemField);
