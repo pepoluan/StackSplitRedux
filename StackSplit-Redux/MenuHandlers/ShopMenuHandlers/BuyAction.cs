@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace StackSplitRedux.MenuHandlers
     {
     class BuyAction : ShopAction
         {
+        private readonly Guid GUID = Guid.NewGuid();
+
         /// <summary>Constructs an instance.</summary>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
@@ -16,6 +19,11 @@ namespace StackSplitRedux.MenuHandlers
             : base(menu, item) {
             // Default amount
             this.Amount = Mod.Config.DefaultShopAmount;
+            Log.TraceIfD($"[{nameof(BuyAction)}] Instantiated for shop {menu} item {item}, GUID = {GUID}");
+            }
+
+        ~BuyAction() {
+            Log.TraceIfD($"[{nameof(BuyAction)}] Finalized for GUID = {GUID}");
             }
 
         /// <summary>Verifies the conditions to perform te action.</summary>
