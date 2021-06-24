@@ -52,7 +52,6 @@ namespace StackSplitRedux.MenuHandlers
             var hoverRecipe = Mod.Reflection.GetField<CraftingRecipe>(this.MenuPage, "hoverRecipe").GetValue();
             var hoveredItem = hoverRecipe?.createItem();
             var heldItem = Mod.Reflection.GetField<Item>(this.MenuPage, "heldItem").GetValue();
-            var cooking = Mod.Reflection.GetField<bool>(this.MenuPage, "cooking").GetValue();
 
             // If we're holding an item already then it must stack with the item we want to craft.
             if (hoveredItem == null || (heldItem != null && heldItem.Name != hoveredItem.Name))
