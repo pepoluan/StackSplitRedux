@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using StardewValley;
-using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+
+using StardewValley;
+using StardewValley.Menus;
 
 namespace StackSplitRedux.MenuHandlers
     {
