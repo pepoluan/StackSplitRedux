@@ -52,14 +52,14 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="amount">Number of items.</param>
         /// <param name="clickLocation">Where the player clicked.</param>
         public override void PerformAction(int amount, Point clickLocation) {
+            var pfx = $"[{nameof(BuyAction)}.{nameof(PerformAction)}]";
             var chosen = this.ClickedItem;
             var chosen_max = chosen.maximumStackSize();
             var nativeMenu = this.NativeShopMenu;
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
 
             Log.Trace(
-                $"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, " +
-                $"nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}"
+                $"{pfx} chosen = {chosen}, nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType} ({this.ShopCurrencyName})"
                 );
 
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
@@ -70,17 +70,17 @@ namespace StackSplitRedux.MenuHandlers
             if ((numHeld + amount) > chosen_max) amount = chosen_max - numHeld;
 
             if (amount <= 0) {
-                Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] purchasable amount <= 0, purchase aborted");
+                Log.Trace($"{pfx} purchasable amount <= 0, purchase aborted");
                 return;
                 }
 
-            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchasing {amount} of {chosen.Name}");
+            Log.Trace($"{pfx} Purchasing {amount} of {chosen.Name}");
 
             // Try to purchase the item - method returns true if it should be removed from the shop since there's no more.
             var purchaseMethod = Mod.Reflection.GetMethod(nativeMenu, "tryToPurchaseItem");
             int index = BuyAction.GetClickedItemIndex(nativeMenu, clickLocation);
             if (purchaseMethod.Invoke<bool>(chosen, heldItem, amount, clickLocation.X, clickLocation.Y, index)) {
-                Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Item is limited, reducing stock");
+                Log.TraceIfD($"{pfx} Item is limited, reducing stock");
                 // remove the purchased item from the stock etc.
                 nativeMenu.itemPriceAndStock.Remove(chosen);
                 nativeMenu.forSale.Remove(chosen);
@@ -89,6 +89,7 @@ namespace StackSplitRedux.MenuHandlers
 
         public int GetMaxPurchasable() {
             if (this._MaxPurchasable is null) {
+                var pfx = $"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}]";
                 Debug.Assert(this.ClickedItem is not null);
                 Item chosen = this.ClickedItem;
                 Dictionary<ISalable, int[]> priceAndStockMap = this.NativeShopMenu.itemPriceAndStock;
@@ -96,21 +97,21 @@ namespace StackSplitRedux.MenuHandlers
 
                 // Calculate the number to purchase
                 int[] stockData = priceAndStockMap[chosen];
-                Log.Trace($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] chosen stockData = {string.Join(", ", stockData)}");
+                Log.Trace($"{pfx} chosen stockData = {string.Join(", ", stockData)}");
                 int numInStock = stockData[1];
                 int itemPrice = stockData[0];
                 int currentMonies;
                 if (itemPrice > 0) {  // using money
                     currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
-                    Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] player has {currentMonies} of currency {this.ShopCurrencyType}");
+                    Log.TraceIfD($"{pfx} player has {currentMonies} of currency {this.ShopCurrencyType} ({this.ShopCurrencyName})");
                     }
                 else {  // barter system. "monies" is now the wanted barter item in [2]
                     itemPrice = stockData[3];
                     var barterItem = stockData[2];
                     currentMonies = Game1.player.getItemCount(barterItem);
-                    Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] Barter system: player has {currentMonies} of item {barterItem}");
+                    Log.TraceIfD($"{pfx} Barter system: player has {currentMonies} of item {barterItem}");
                     }
-                Log.Trace($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] chosen item price is {itemPrice}");
+                Log.Trace($"{pfx} chosen item price is {itemPrice}");
                 Debug.Assert(itemPrice > 0);
 
                 this._MaxPurchasable = Math.Min(currentMonies / itemPrice, numInStock);
