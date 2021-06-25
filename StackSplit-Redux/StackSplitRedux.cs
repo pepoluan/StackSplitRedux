@@ -143,7 +143,7 @@ namespace StackSplitRedux
         /// <param name="newMenu">The new menu being opened</param>
         /// <param name="handler">The handler for the new menu</param>
         private void EnqueueMenuHandlerOpener(IClickableMenu newMenu, IMenuHandler handler) {
-            if (WaitOpenTicks > 0) return;
+            if (this.WaitOpenTicks > 0) return;
             Log.TraceIfD($"MenuHandlerOpener enregistered & enqueued");
             this.MenuToHandle = newMenu;
             this.CurrentMenuHandler = handler;
@@ -156,7 +156,7 @@ namespace StackSplitRedux
         /// </summary>
         private void DequeueMenuHandlerOpener() {
             Mod.Events.GameLoop.UpdateTicked -= MenuHandlerOpener;
-            WaitOpenTicks = 0;
+            this.WaitOpenTicks = 0;
             }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace StackSplitRedux
         /// <param name="sender">Event's sender -- not used</param>
         /// <param name="e">Event's args -- not used</param>
         private void MenuHandlerOpener(object sender, UpdateTickedEventArgs e) {
-            if (WaitOpenTicks++ >= TICKS_DELAY_OPEN) {
+            if (this.WaitOpenTicks++ >= TICKS_DELAY_OPEN) {
                 DequeueMenuHandlerOpener();
                 this.CurrentMenuHandler.Open(this.MenuToHandle);
                 SubscribeHandlerEvents();
