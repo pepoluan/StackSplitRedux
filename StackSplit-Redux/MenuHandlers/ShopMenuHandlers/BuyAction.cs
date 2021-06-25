@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,9 +20,10 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="item">The item to buy.</param>
         public BuyAction(ShopMenu menu, ISalable item)
             : base(menu, item) {
-            // Default amount
-            this.Amount = Mod.Config.DefaultShopAmount;
-            Log.TraceIfD($"[{nameof(BuyAction)}] Instantiated for shop {menu} item {item}, GUID = {GUID}");
+            // Default
+            if (CanPerformAction())
+                this.Amount = Math.Min(Mod.Config.DefaultShopAmount, GetMaxPurchasable());
+            Log.TraceIfD($"[{nameof(BuyAction)}] Instantiated for shop {menu} item {item}, Amount = {this.Amount}, GUID = {GUID}");
             }
 
         ~BuyAction() {
