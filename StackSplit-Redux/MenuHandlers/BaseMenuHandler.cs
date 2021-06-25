@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -12,6 +12,8 @@ namespace StackSplitRedux.MenuHandlers
     public abstract class BaseMenuHandler<TMenuType>
         : IMenuHandler where TMenuType : IClickableMenu
         {
+        private const float RIGHT_CLICK_POLLING_INTVL = 650f;
+
         /// <summary>The inventory handler.</summary>
         protected readonly InventoryHandler Inventory = new();
 
@@ -171,7 +173,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>How long the right click has to be held for before the receiveRIghtClick gets called rapidly (See Game1.Update)</summary>
         /// <returns>The polling interval.</returns>
         protected virtual float GetRightClickPollingInterval() {
-            return 650f;
+            return RIGHT_CLICK_POLLING_INTVL;
             }
 
         /// <summary>Allows derived handlers to provide additional checks before opening the split menu.</summary>
