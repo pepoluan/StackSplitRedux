@@ -101,8 +101,8 @@ namespace StackSplitRedux.MenuHandlers
             var hoveredItem = this.HoveredItem;
             var heldItem = Game1.player.CursorSlotItem;
 
-            int hoveredItems = hoveredItem.Stack;
-            int heldItems = (heldItem != null ? heldItem.Stack : 0);
+            int hoveredItemCount = hoveredItem.Stack;
+            int heldItemCount = (heldItem != null ? heldItem.Stack : 0);
             int maxStack = hoveredItem.maximumStackSize();
 
             // Run native click code to get the selected item
@@ -110,13 +110,13 @@ namespace StackSplitRedux.MenuHandlers
             Debug.Assert(heldItem != null);
 
             // Clamp the amount to the total number of items
-            stackAmount = Math.Min(Math.Max(0, stackAmount), hoveredItems);
-            heldItem.Stack = Math.Min(maxStack, heldItems + stackAmount);
+            stackAmount = Math.Min(Math.Max(0, stackAmount), hoveredItemCount);
+            heldItem.Stack = Math.Min(maxStack, heldItemCount + stackAmount);
             heldItem = heldItem.Stack > 0 ? heldItem : null;
 
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
-            if ((heldItems + stackAmount) > maxStack)
-                hoveredItem.Stack = hoveredItems - (maxStack - heldItems);
+            if ((heldItemCount + stackAmount) > maxStack)
+                hoveredItem.Stack = hoveredItemCount - (maxStack - heldItemCount);
 
             // Remove the item from the inventory as it's now all being held.
             if (hoveredItem.Stack == 0)
