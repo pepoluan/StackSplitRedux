@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -12,16 +12,16 @@ namespace StackSplitRedux.MenuHandlers
     public class InventoryHandler
         {
         /// <summary>If the handler has been initialized yet by calling Init.</summary>
-        public bool Initialized => this.NativeInventory != null;
+        public bool Initialized => this.NativeInventoryMenu != null;
 
         /// <summary>Convenience for grabbing native inventory buttons.</summary>
-        private List<ClickableComponent> Inventory => this.NativeInventory.inventory;
+        private List<ClickableComponent> Inventory => this.NativeInventoryMenu.inventory;
 
         /// <summary>Convenience for grabbing native inventory items.</summary>
-        private IList<Item> InventoryItems => this.NativeInventory.actualInventory;
+        private IList<Item> InventoryItems => this.NativeInventoryMenu.actualInventory;
 
         /// <summary>Native inventory.</summary>
-        private InventoryMenu NativeInventory;
+        private InventoryMenu NativeInventoryMenu;
 
         /// <summary>Inventory interface bounds.</summary>
         private Rectangle Bounds;
@@ -41,9 +41,10 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         /// <summary>This must be called everytime the inventory is opened/resized.</summary>
-        /// <param name="inventory">Native inventory.</param>
-        public void Init(InventoryMenu inventory, IReflectedField<Item> hoveredItemField) {
-            this.NativeInventory = inventory;
+        /// <param name="inventoryMenu">Native inventory.</param>
+        public void Init(InventoryMenu inventoryMenu, IReflectedField<Item> hoveredItemField) {
+            Debug.Assert(inventoryMenu is not null);
+            this.NativeInventoryMenu = inventoryMenu;
             this.HoveredItemField = hoveredItemField;
 
             // Create the bounds around the inventory
