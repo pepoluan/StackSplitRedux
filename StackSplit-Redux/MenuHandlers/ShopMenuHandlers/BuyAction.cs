@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -90,6 +90,7 @@ namespace StackSplitRedux.MenuHandlers
 
         public int GetMaxPurchasable() {
             if (this._MaxPurchasable is null) {
+                Debug.Assert(this.ClickedItem is not null);
                 Item chosen = this.ClickedItem;
                 Dictionary<ISalable, int[]> priceAndStockMap = this.NativeShopMenu.itemPriceAndStock;
                 Debug.Assert(priceAndStockMap.ContainsKey(chosen));
