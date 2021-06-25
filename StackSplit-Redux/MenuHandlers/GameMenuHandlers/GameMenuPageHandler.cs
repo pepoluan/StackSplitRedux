@@ -1,4 +1,4 @@
-using StardewValley;
+﻿using StardewValley;
 using StardewValley.Menus;
 using System;
 
@@ -7,7 +7,7 @@ namespace StackSplitRedux.MenuHandlers
     public abstract class GameMenuPageHandler<TPageType> : IGameMenuPageHandler where TPageType : IClickableMenu
         {
         /// <summary>The inventory handler.</summary>
-        protected InventoryHandler Inventory = null;
+        protected InventoryHandler InventoryHandler = null;
 
         /// <summary>Does this menu have an inventory section.</summary>
         protected bool HasInventory { get; set; } = true;
@@ -30,11 +30,11 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Notifies the page handler that its corresponding menu has been opened.</summary>
         /// <param name="menu">The native menu owning all the pages.</param>
         /// <param name="page">The specific page this handler is for.</param>
-        /// <param name="inventory">The inventory handler.</param>
-        public virtual void Open(IClickableMenu menu, IClickableMenu page, InventoryHandler inventory) {
+        /// <param name="inventoryHandler">The inventory handler.</param>
+        public virtual void Open(IClickableMenu menu, IClickableMenu page, InventoryHandler inventoryHandler) {
             this.NativeMenu = menu;
             this.MenuPage = page as TPageType;
-            this.Inventory = inventory;
+            this.InventoryHandler = inventoryHandler;
 
             if (this.HasInventory)
                 InitInventory();
@@ -44,7 +44,7 @@ namespace StackSplitRedux.MenuHandlers
         public virtual void Close() {
             this.NativeMenu = null;
             this.MenuPage = null;
-            this.Inventory = null;
+            this.InventoryHandler = null;
             }
 
         /// <summary>Initializes the inventory using the most common variable names.</summary>
@@ -56,8 +56,11 @@ namespace StackSplitRedux.MenuHandlers
                 // one-by-one, or simply use Reflection to fetch the fields.
                 var inventoryMenu = Mod.Reflection.GetField<IClickableMenu>(this.MenuPage, "inventory").GetValue() as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoveredItem");
-
-                this.Inventory.Init(inventoryMenu, hoveredItemField);
+                Log.TraceIfD(
+                    $"[{nameof(GameMenuPageHandler<TPageType>)}.{nameof(InitInventory)}] Initializing InventoryHandler " +
+                    $"for menu = {inventoryMenu}, hovered = {hoveredItemField}"
+                    );
+                this.InventoryHandler.Init(inventoryMenu, hoveredItemField);
                 }
             catch (Exception e) {
                 Log.Error($"[{nameof(GameMenuPageHandler<TPageType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler:\n{e}");
@@ -71,9 +74,9 @@ namespace StackSplitRedux.MenuHandlers
             stackAmount = 0;
 
             // This logic is the same for all the page handlers so we can do it here.
-            this.Inventory.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
-            if (this.Inventory.CanSplitSelectedItem()) {
-                stackAmount = this.Inventory.GetDefaultSplitStackAmount();
+            this.InventoryHandler.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
+            if (this.InventoryHandler.CanSplitSelectedItem()) {
+                stackAmount = this.InventoryHandler.GetDefaultSplitStackAmount();
 
                 return EInputHandled.Consumed;
                 }
@@ -97,7 +100,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Lets the handler run the logic for doing the split after the amount has been input.</summary>
         /// <param name="amount">The stack size the user requested.</param>
         public virtual void OnStackAmountEntered(int amount) {
-            this.Inventory.SplitSelectedItem(amount);
+            this.InventoryHandler.SplitSelectedItem(amount);
             }
         }
     }

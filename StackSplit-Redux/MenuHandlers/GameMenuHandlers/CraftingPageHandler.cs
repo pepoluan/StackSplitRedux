@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -31,7 +31,7 @@ namespace StackSplitRedux.MenuHandlers
             var inventoryMenu = this.MenuPage.inventory;
             var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoverItem");
 
-            this.Inventory.Init(inventoryMenu, hoveredItemField);
+            this.InventoryHandler.Init(inventoryMenu, hoveredItemField);
             }
 
         /// <summary>Tells the handler that the inventory was shift-clicked.</summary>
