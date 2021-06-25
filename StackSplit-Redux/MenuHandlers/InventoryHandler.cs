@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -90,8 +90,10 @@ namespace StackSplitRedux.MenuHandlers
             var hoveredItem = this.HoveredItem;
             var heldItem = Game1.player.CursorSlotItem;
 
-            return (hoveredItem != null && hoveredItem.Stack > 1 &&
-                   (heldItem == null || (hoveredItem.canStackWith(heldItem) && heldItem.Stack < heldItem.maximumStackSize())));
+            if (hoveredItem is null) return false;
+            if (hoveredItem.Stack <= 1) return false;
+            if (heldItem is null) return true;
+            return hoveredItem.canStackWith(heldItem) && heldItem.Stack < heldItem.maximumStackSize();
             }
 
         /// <summary>Updates the stack values of the hovered and held item.</summary>
