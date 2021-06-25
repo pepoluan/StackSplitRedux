@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using StardewValley.Menus;
 using StardewValley;
 using System.Diagnostics;
@@ -33,7 +33,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>The total number of items in the hovered stack.</summary>
         private int TotalItems = 0;
 
-        /// <summary>The currently held item.</summary>
+        /// <summary>The currently held item (in the Native Menu).</summary>
         private Item HeldItem => this.NativeMenu.heldItem;
 
 
@@ -86,7 +86,7 @@ namespace StackSplitRedux.MenuHandlers
                 this.PlayerInventoryMenu = this.NativeMenu.inventory;
                 this.ItemsToGrabMenu = this.NativeMenu.ItemsToGrabMenu;
 
-                // Emulate the right click method that would normally happen.
+                // Emulate the right click method that would normally happen (??)
                 this.HoverItem = this.NativeMenu.hoveredItem;
                 }
             catch (Exception e) {
@@ -94,7 +94,7 @@ namespace StackSplitRedux.MenuHandlers
                 return EInputHandled.NotHandled;
                 }
 
-            // Do nothing if we're not hovering over an item
+            // Do nothing if we're not hovering over an item, or item is single (no point in splitting)
             if (this.HoverItem == null || this.HoverItem.Stack <= 1) {
                 return EInputHandled.NotHandled;
                 }
