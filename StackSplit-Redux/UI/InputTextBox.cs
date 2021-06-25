@@ -13,10 +13,9 @@ namespace StackSplitRedux.UI
         {
         private const int CARET_WIDTH = 4;
 
-        // TODO: create proper event args
         /// <summary>Generic event.</summary>
-        /// <param name="textbox">Textbox the event originated from.</param>
-        public delegate void InputTextboxEvent(InputTextBox textbox);
+        /// <param name="sender">Textbox the event originated from.</param>
+        public delegate void InputTextboxEvent(InputTextBox sender);
 
         /// <summary>Invoked when the text is submitted.</summary>
         public event InputTextboxEvent OnSubmit;

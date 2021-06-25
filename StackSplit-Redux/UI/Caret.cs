@@ -4,7 +4,6 @@ namespace StackSplitRedux.UI
     {
     sealed class Caret
         {
-        // TODO: add draw calls/blink timer (or do that in a different class)
         /// <summary>Current index of the caret.</summary>
         public int Index { get; private set; } = 0;
 
