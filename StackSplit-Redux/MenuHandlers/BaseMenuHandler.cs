@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StackSplitRedux.UI;
 using StardewModdingAPI;
@@ -222,10 +222,12 @@ namespace StackSplitRedux.MenuHandlers
                 return;
 
             try {
-                // Have to use Reflection here because IClickableMenu does not define .inventory nor .hoveredItem
-                // (Subclasses of IClickableMenu that have .HasInventory == true DO define .inventory & .hoveredItem,
-                // but they do not define an interface for that, so it's either trying to cast to those subclasses
-                // one-by-one, or simply use Reflection to fetch the fields.
+                // Have to use Reflection here because IClickableMenu does not define .inventory nor .hoveredItem;
+                // rather, they are defined per-class by subclasses that implement IClickableMenu.
+                // Our wrappers are designed so that if .HasInventory == true, then the native classes DO have .inventory & .hoveredItem
+                // (known by inspecting them class defs in the game code).
+                // Since there is no Interface defined in the game code that guarantees the existence of .inventory & .hoveredItem,
+                // we either have to cast them explicitly, or just use Reflection to retrieve.
                 var inventoryMenu = Mod.Reflection.GetField<IClickableMenu>(this.NativeMenu, "inventory").GetValue() as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.NativeMenu, "hoveredItem");
 
