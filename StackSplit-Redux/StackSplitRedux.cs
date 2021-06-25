@@ -1,4 +1,4 @@
-using StackSplitRedux.MenuHandlers;
+﻿using StackSplitRedux.MenuHandlers;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -81,7 +81,6 @@ namespace StackSplitRedux
                 }
             this.WasResizeEvent = false; // Reset
 
-
             // switch the currently handler to the one for the new menu type
             var nuMenu = e.NewMenu;
             Log.TraceIfD($"Menu changed from {e.OldMenu} to {nuMenu}");
@@ -95,9 +94,6 @@ namespace StackSplitRedux
                     DequeueMenuHandlerOpener();
                     this.CurrentMenuHandler.Close();
                     }
-
-                //this.CurrentMenuHandler = handler;
-                //this.CurrentMenuHandler.Open(nuMenu);
                 EnqueueMenuHandlerOpener(nuMenu, handler);
                 }
             else {
