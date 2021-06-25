@@ -55,13 +55,12 @@ namespace StackSplitRedux.MenuHandlers
             var chosen = this.ClickedItem;
             var chosen_max = chosen.maximumStackSize();
             var nativeMenu = this.NativeShopMenu;
-            
+            var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
+
             Log.Trace(
                 $"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen = {chosen}, " +
                 $"nativeMenu = {nativeMenu}, ShopCurrencyType = {this.ShopCurrencyType}"
                 );
-
-            var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
 
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
             amount = Seq.Min(amount, GetMaxPurchasable(), chosen_max);
