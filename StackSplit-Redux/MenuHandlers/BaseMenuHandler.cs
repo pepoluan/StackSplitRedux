@@ -218,7 +218,7 @@ namespace StackSplitRedux.MenuHandlers
                 // (Subclasses of IClickableMenu that have .HasInventory == true DO define .inventory & .hoveredItem,
                 // but they do not define an interface for that, so it's either trying to cast to those subclasses
                 // one-by-one, or simply use Reflection to fetch the fields.
-                var inventoryMenu = Mod.Reflection.GetField<Type>(this.NativeMenu, "inventory") as InventoryMenu;
+                var inventoryMenu = Mod.Reflection.GetField<IClickableMenu>(this.NativeMenu, "inventory").GetValue() as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.NativeMenu, "hoveredItem");
 
                 this.Inventory.Init(inventoryMenu, hoveredItemField);
