@@ -62,8 +62,6 @@ namespace StackSplitRedux.MenuHandlers
                 );
 
             var heldItem = Mod.Reflection.GetField<Item>(nativeMenu, "heldItem").GetValue();
-            Dictionary<ISalable, int[]> priceAndStockMap = nativeMenu.itemPriceAndStock;
-            Debug.Assert(priceAndStockMap.ContainsKey(chosen));
 
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
             amount = Seq.Min(amount, GetMaxPurchasable(), chosen_max);
@@ -85,7 +83,7 @@ namespace StackSplitRedux.MenuHandlers
             if (purchaseMethod.Invoke<bool>(chosen, heldItem, amount, clickLocation.X, clickLocation.Y, index)) {
                 Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Item is limited, reducing stock");
                 // remove the purchased item from the stock etc.
-                priceAndStockMap.Remove(chosen);
+                nativeMenu.itemPriceAndStock.Remove(chosen);
                 nativeMenu.forSale.Remove(chosen);
                 }
             }
