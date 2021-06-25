@@ -145,9 +145,9 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Updates the number of items being held by the player based on what was input to the split menu.</summary>
         /// <param name="item">The selected item.</param>
         /// <param name="who">The player that selected the items.</param>
-        /// <param name="inventory">Either the player inventory or the shop inventory.</param>
+        /// <param name="inventoryMenu">Either the player inventory or the shop inventory.</param>
         /// <param name="callback">The native callback to invoke to continue with the regular behavior after we've modified the stack.</param>
-        private void MoveItems(Item item, SFarmer who, InventoryMenu inventory, ItemGrabMenu.behaviorOnItemSelect callback) {
+        private void MoveItems(Item item, SFarmer who, InventoryMenu inventoryMenu, ItemGrabMenu.behaviorOnItemSelect callback) {
             Debug.Assert(this.StackAmount > 0);
 
             // Get the held item now that it's been set by the native receiveRightClick call
@@ -165,9 +165,9 @@ namespace StackSplitRedux.MenuHandlers
 
                 // Remove the empty item from the inventory
                 if (this.HoverItem.Stack <= 0) {
-                    int index = inventory.actualInventory.IndexOf(this.HoverItem);
+                    int index = inventoryMenu.actualInventory.IndexOf(this.HoverItem);
                     if (index > -1)
-                        inventory.actualInventory[index] = null;
+                        inventoryMenu.actualInventory[index] = null;
                     }
                 }
 
