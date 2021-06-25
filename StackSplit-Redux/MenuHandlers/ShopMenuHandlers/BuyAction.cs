@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +12,7 @@ namespace StackSplitRedux.MenuHandlers
         {
         private readonly Guid GUID = Guid.NewGuid();
 
+        private int? _MaxPurchasable = null;
         /// <summary>Constructs an instance.</summary>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
@@ -56,27 +57,8 @@ namespace StackSplitRedux.MenuHandlers
             Dictionary<ISalable, int[]> priceAndStockMap = nativeMenu.itemPriceAndStock;
             Debug.Assert(priceAndStockMap.ContainsKey(chosen));
 
-            // Calculate the number to purchase
-            int[] stockData = priceAndStockMap[chosen];
-            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen stockData = {string.Join(", ", stockData)}");
-            int numInStock = stockData[1];
-            int itemPrice = stockData[0];
-            int currentMonies;
-            if (itemPrice > 0) {  // using money
-                currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
-                Log.TraceIfD($"player has {currentMonies} of currency {this.ShopCurrencyType}");
-                }
-            else {  // barter system. "monies" is now the wanted barter item in [2]
-                itemPrice = stockData[3];
-                var barterItem = stockData[2];
-                currentMonies = Game1.player.getItemCount(barterItem);
-                Log.TraceIfD($"Barter system: player has {currentMonies} of item {barterItem}");
-                }
-            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] chosen item price is {itemPrice}");
-            Debug.Assert(itemPrice > 0);
-
             // Using Linq here is slower by A LOT but ultimately MUCH more readable
-            amount = Seq.Min(amount, currentMonies / itemPrice, numInStock, chosen_max);
+            amount = Seq.Min(amount, GetMaxPurchasable(), chosen_max);
 
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
             int numHeld = heldItem?.Stack ?? 0;
@@ -87,7 +69,7 @@ namespace StackSplitRedux.MenuHandlers
                 return;
                 }
 
-            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchasing {amount} of {chosen.Name} for {itemPrice * amount}");
+            Log.Trace($"[{nameof(BuyAction)}.{nameof(PerformAction)}] Purchasing {amount} of {chosen.Name}");
 
             // Try to purchase the item - method returns true if it should be removed from the shop since there's no more.
             var purchaseMethod = Mod.Reflection.GetMethod(nativeMenu, "tryToPurchaseItem");
@@ -98,6 +80,36 @@ namespace StackSplitRedux.MenuHandlers
                 priceAndStockMap.Remove(chosen);
                 nativeMenu.forSale.Remove(chosen);
                 }
+            }
+
+        public int GetMaxPurchasable() {
+            if (this._MaxPurchasable is null) {
+                Item chosen = this.ClickedItem;
+                Dictionary<ISalable, int[]> priceAndStockMap = this.NativeShopMenu.itemPriceAndStock;
+                Debug.Assert(priceAndStockMap.ContainsKey(chosen));
+
+                // Calculate the number to purchase
+                int[] stockData = priceAndStockMap[chosen];
+                Log.Trace($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] chosen stockData = {string.Join(", ", stockData)}");
+                int numInStock = stockData[1];
+                int itemPrice = stockData[0];
+                int currentMonies;
+                if (itemPrice > 0) {  // using money
+                    currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
+                    Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] player has {currentMonies} of currency {this.ShopCurrencyType}");
+                    }
+                else {  // barter system. "monies" is now the wanted barter item in [2]
+                    itemPrice = stockData[3];
+                    var barterItem = stockData[2];
+                    currentMonies = Game1.player.getItemCount(barterItem);
+                    Log.TraceIfD($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] Barter system: player has {currentMonies} of item {barterItem}");
+                    }
+                Log.Trace($"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}] chosen item price is {itemPrice}");
+                Debug.Assert(itemPrice > 0);
+
+                this._MaxPurchasable = Math.Min(currentMonies / itemPrice, numInStock);
+                }
+            return this._MaxPurchasable.Value;
             }
 
         /// <summary>Helper method getting which item in the shop was clicked.</summary>
