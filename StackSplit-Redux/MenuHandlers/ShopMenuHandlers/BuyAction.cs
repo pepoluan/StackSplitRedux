@@ -12,7 +12,9 @@ namespace StackSplitRedux.MenuHandlers
         {
         private readonly Guid GUID = Guid.NewGuid();
 
+        private bool? _CanPerformAction = null;
         private int? _MaxPurchasable = null;
+
         /// <summary>Constructs an instance.</summary>
         /// <param name="menu">The native shop menu.</param>
         /// <param name="item">The item to buy.</param>
@@ -29,18 +31,20 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Verifies the conditions to perform the action.</summary>
         public override bool CanPerformAction() {
-            var held = Mod.Reflection.GetField<Item>(this.NativeShopMenu, "heldItem").GetValue();
-            int currentMonies = ShopMenu.getPlayerCurrencyAmount(Game1.player, this.ShopCurrencyType);
+            if (this._CanPerformAction is null) {
+                var held = Mod.Reflection.GetField<Item>(this.NativeShopMenu, "heldItem").GetValue();
 
-            return
-                this.ClickedItem is Item chosen          // not null
-                && chosen.canStackWith(chosen)           // Item type is stackable
-                && (
-                    held == null
-                    || (chosen.canStackWith(held) && held.Stack < held.maximumStackSize())  // Holding the same item and not hold max stack
-                    )
-                && currentMonies >= chosen.salePrice()   // Can afford
-                ;
+                this._CanPerformAction =
+                    this.ClickedItem is Item chosen    // not null
+                    && chosen.canStackWith(chosen)     // Item type is stackable
+                    && (
+                        held == null                   // not holding anything, or...
+                        || (chosen.canStackWith(held) && held.Stack < held.maximumStackSize())  // Holding the same item and not hold max stack
+                        )
+                    && GetMaxPurchasable() > 0         // Can afford
+                    ;
+                }
+            return this._CanPerformAction.Value;
             }
 
         /// <summary>Does the action.</summary>
