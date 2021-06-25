@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using StardewValley.Menus;
 using StardewValley;
 using System.Diagnostics;
@@ -62,23 +62,21 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Called when the current handler loses focus when the split menu is open, allowing it to cancel the operation or run the default behaviour.</summary>
         /// <returns>If the input was handled or consumed.</returns>
         protected override EInputHandled CancelMove() {
-            if (this.HoverItem != null) {
-                // If being cancelled from a click else-where then the keyboad state won't have shift held (unless they're still holding it),
-                // in which case the default right-click behavior will run and only a single item will get moved instead of half the stack.
-                // Therefore we must make sure it's still using our callback so we can correct the amount.
-                HookCallbacks();
+            // Not hovering above anything so pass-through (??)
+            if (this.HoverItem is null) return EInputHandled.NotHandled;
 
-                // Run the regular command
-                this.NativeMenu?.receiveRightClick(this.ClickItemLocation.X, this.ClickItemLocation.Y);
+            // If being cancelled from a click else-where then the keyboad state won't have shift held (unless they're still holding it),
+            // in which case the default right-click behavior will run and only a single item will get moved instead of half the stack.
+            // Therefore we must make sure it's still using our callback so we can correct the amount.
+            HookCallbacks();
 
-                CloseSplitMenu();
+            // Run the regular command
+            this.NativeMenu?.receiveRightClick(this.ClickItemLocation.X, this.ClickItemLocation.Y);
 
-                // Consume input so the menu doesn't run left click logic as well
-                return EInputHandled.Consumed;
-                }
+            CloseSplitMenu();
 
             // Consume input so the menu doesn't run left click logic as well
-            return EInputHandled.NotHandled;
+            return EInputHandled.Consumed;
             }
 
         /// <summary>Main event that derived handlers use to setup necessary hooks and other things needed to take over how the stack is split.</summary>
