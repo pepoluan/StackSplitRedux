@@ -100,28 +100,35 @@ namespace StackSplitRedux.MenuHandlers
             Debug.Assert(this.HoveredItemField != null);
 
             var hoveredItem = this.HoveredItem;
-            var heldItem = Game1.player.CursorSlotItem;
-
-            int hoveredItemCount = hoveredItem.Stack;
-            int heldItemCount = (heldItem != null ? heldItem.Stack : 0);
+            var hoveredItemCount = this.HoveredItem.Stack;  // Grab & hold the value
             int maxStack = hoveredItem.maximumStackSize();
 
+            var heldItem = Game1.player.CursorSlotItem;
+            var heldItemCount = heldItem?.Stack ?? 0;  // Grab & hold the value
+
             // Run native click code to get the selected item
-            heldItem = this.NativeInventory.rightClick(this.SelectedItemPosition_X, this.SelectedItemPosition_Y, heldItem);
+            // This is why we need to grab & hold the values above: rightClick immediately decreases HoveredItem.Stack and increases heldItem.Stack
+            heldItem = this.NativeInventoryMenu.rightClick(this.SelectedItemPosition_X, this.SelectedItemPosition_Y, heldItem);
             Debug.Assert(heldItem != null);
 
             // Clamp the amount to the total number of items
             stackAmount = Math.Min(Math.Max(0, stackAmount), hoveredItemCount);
-            heldItem.Stack = Math.Min(maxStack, heldItemCount + stackAmount);
-            heldItem = heldItem.Stack > 0 ? heldItem : null;
-
             // If we couldn't grab all that we wanted then only subtract the amount we were able to grab
             if ((heldItemCount + stackAmount) > maxStack)
-                hoveredItem.Stack = hoveredItemCount - (maxStack - heldItemCount);
+                stackAmount = maxStack - heldItemCount;
+            heldItemCount += stackAmount;
 
-            // Remove the item from the inventory as it's now all being held.
-            if (hoveredItem.Stack == 0)
+            // Perform the reduction
+            hoveredItemCount -= stackAmount;
+            if (hoveredItemCount <= 0)
+                // Remove the item from the inventory if it's now all being held.
                 RemoveItemFromInventory(hoveredItem);
+            else
+                // Commit the manipulated hovered value, overwriting changes by rightClick() above
+                this.HoveredItem.Stack = hoveredItemCount;
+
+            // Commit the new heldItemCount, overwriting changes by rightClick() above
+            heldItem.Stack = heldItemCount;
 
             // Update the native fields
             Game1.player.CursorSlotItem = heldItem;
