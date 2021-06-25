@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -16,6 +16,16 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Currency type of the shop.</summary>
         protected int ShopCurrencyType { get; private set; }
+
+        protected string ShopCurrencyName {
+            get => this.ShopCurrencyType switch {
+                0 => "Money",
+                1 => "festivalScore",
+                2 => "clubCoins",
+                4 => "QiGems",
+                _ => "unknown"
+                };
+            }
 
         /// <summary>The item to be bought/sold.</summary>
         protected Item ClickedItem = null;
