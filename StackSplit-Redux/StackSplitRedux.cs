@@ -1,4 +1,4 @@
-﻿using StackSplitRedux.MenuHandlers;
+using StackSplitRedux.MenuHandlers;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -90,7 +90,7 @@ namespace StackSplitRedux
                 || HandlerMapping.TryGetHandler(nuMenu.ToString(), out handler)
                 ) {
                 Log.TraceIfD($"{nuMenu} intercepted");
-                // Close the current one of it's valid
+                // Close the current one if still open, it's likely invalid
                 if (this.CurrentMenuHandler != null) {
                     DequeueMenuHandlerOpener();
                     this.CurrentMenuHandler.Close();
@@ -140,6 +140,12 @@ namespace StackSplitRedux
             this.CurrentMenuHandler?.Update();
             }
 
+        /// <summary>
+        /// Prepare to open MenuHandler by attaching to UpateTicked event. This is done to allow other mods to finish manipulating
+        /// the inventory + extended inventory
+        /// </summary>
+        /// <param name="newMenu">The new menu being opened</param>
+        /// <param name="handler">The handler for the new menu</param>
         private void EnqueueMenuHandlerOpener(IClickableMenu newMenu, IMenuHandler handler) {
             if (WaitOpenTicks > 0) return;
             Log.TraceIfD($"MenuHandlerOpener enregistered & enqueued");
@@ -148,11 +154,21 @@ namespace StackSplitRedux
             Mod.Events.GameLoop.UpdateTicked += MenuHandlerOpener;
             }
 
+        /// <summary>
+        /// <para>Detach MenuHandlerOpener from UpdateTicked and reset the timer.</para>
+        /// <para>Called to cancel a not-yet triggered opening of MenuHandler</para>
+        /// </summary>
         private void DequeueMenuHandlerOpener() {
             Mod.Events.GameLoop.UpdateTicked -= MenuHandlerOpener;
             WaitOpenTicks = 0;
             }
 
+        /// <summary>
+        /// Opens a MenuHandler after several ticks have passed. This is to allow other mods to finish manipulating the
+        /// inventory + extended inventory
+        /// </summary>
+        /// <param name="sender">Event's sender -- not used</param>
+        /// <param name="e">Event's args -- not used</param>
         private void MenuHandlerOpener(object sender, UpdateTickedEventArgs e) {
             if (WaitOpenTicks++ >= TICKS_DELAY_OPEN) {
                 DequeueMenuHandlerOpener();
