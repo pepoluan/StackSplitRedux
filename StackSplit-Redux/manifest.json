@@ -17,6 +17,6 @@
     "0.11.0": "Internal improvements",
     "0.12.0": "Add support for Workbench + Cooking",
     "0.12.1": "Internal optimizations for CraftingPageHandler, Play sound only once for crafting/cooking",
-    "0.13.0": "Implement GMCM support"
+    "0.13.0": "Implement GMCM support, Lots of internal optimizations"
   }
 }
