@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -59,12 +59,15 @@ namespace StackSplitRedux.MenuHandlers
 
             // We might need to put in some mutex-wrangling here if there' a problem with MultiPlayer desyncs...
 
-            // Grab ingredients
-            List<Item> extraItems = new();
-            // Not using .SelectMany() but iterating manually so we can trigger TraceIfD (optionally if Config = Release)
-            foreach (SChest chest in this.MenuPage._materialContainers) {
-                Log.TraceIfD($"Engrabbening {chest} @ {chest.TileLocation} (fridge = {chest.fridge.Value})");
-                extraItems.AddRange(chest.items);
+            // Grab ingredients in additional places (if any)
+            List<Item> extraItems = null;
+            if (this.MenuPage._materialContainers is not null) {
+                extraItems = new();
+                // Not using .SelectMany() but iterating manually so we can trigger TraceIfD (optionally if Config = Release)
+                foreach (SChest chest in this.MenuPage._materialContainers) {
+                    Log.TraceIfD($"Engrabbening {chest} @ {chest.TileLocation} (fridge = {chest.fridge.Value})");
+                    extraItems.AddRange(chest.items);
+                    }
                 }
 
             // Only allow items that can actually stack
