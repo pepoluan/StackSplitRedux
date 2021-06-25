@@ -95,6 +95,8 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Handle user input.</summary>
         /// <param name="button">The pressed button.</param>
         public EInputHandled HandleInput(SButton button) {
+            string pfx = $"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}]";
+
             // Was right click pressed
             if (button == SButton.MouseRight) {
                 // Invoke split menu if the modifier key was also down
@@ -118,17 +120,21 @@ namespace StackSplitRedux.MenuHandlers
                     // Store where the player clicked to pass to the native code after the split menu has been submitted so it remains the same even if the mouse moved.
                     // Patcher note:
                     this.ClickItemLocation = new Point(Game1.getOldMouseX(true), Game1.getOldMouseY(true));
-                    Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}].ClickItemLocation = {this.ClickItemLocation}");
+                    Log.TraceIfD($"{pfx}.ClickItemLocation = {this.ClickItemLocation}");
 
                     // Notify the handler the inventory was clicked.
-                    if (this.HasInventory && !this.Inventory.Initialized)
-                        Log.Trace($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Handler has inventory but inventory isn't initialized.");
-                    if (this.HasInventory && this.Inventory.Initialized && this.Inventory.WasClicked(Game1.getMouseX(true), Game1.getMouseY(true))) {
-                        Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Jumping to InventoryClicked");
-                        return InventoryClicked();
+                    if (this.HasInventory) {
+                        if (!this.Inventory.Initialized)
+                            Log.Trace($"{pfx} Handler has inventory but inventory isn't initialized.");
+                        else {
+                            if (this.Inventory.WasClicked(Game1.getMouseX(true), Game1.getMouseY(true))) {
+                                Log.TraceIfD($"{pfx} Jumping to InventoryClicked");
+                                return InventoryClicked();
+                                }
+                            }
                         }
 
-                    Log.TraceIfD($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(HandleInput)}] Jumping to OpenSplitMenu");
+                    Log.TraceIfD($"{pfx} Jumping to OpenSplitMenu");
                     return OpenSplitMenu();
                     }
                 return EInputHandled.NotHandled;
