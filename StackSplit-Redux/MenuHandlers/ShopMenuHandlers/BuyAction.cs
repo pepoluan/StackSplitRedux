@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,7 +40,7 @@ namespace StackSplitRedux.MenuHandlers
                     && chosen.canStackWith(chosen)     // Item type is stackable
                     && (
                         held == null                   // not holding anything, or...
-                        || (chosen.canStackWith(held) && held.Stack < held.maximumStackSize())  // Holding the same item and not hold max stack
+                        || (chosen.canStackWith(held) && held.Stack < held.maximumStackSize())  // item held can stack with chosen and at max
                         )
                     && GetMaxPurchasable() > 0         // Can afford
                     ;
