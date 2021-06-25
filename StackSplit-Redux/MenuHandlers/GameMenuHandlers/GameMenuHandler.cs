@@ -136,7 +136,7 @@ namespace StackSplitRedux.MenuHandlers
             this.CurrentPageHandler = pageHandler;
 
             var pages = this.NativeMenu.pages;
-            pageHandler.Open(this.NativeMenu, pages[newTab], this.Inventory);
+            pageHandler.Open(this.NativeMenu, pages[newTab], this.InvHandler);
 
             return true;
             }

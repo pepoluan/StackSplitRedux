@@ -15,7 +15,7 @@ namespace StackSplitRedux.MenuHandlers
         private const float RIGHT_CLICK_POLLING_INTVL = 650f;
 
         /// <summary>The inventory handler.</summary>
-        protected readonly InventoryHandler Inventory = new();
+        protected readonly InventoryHandler InvHandler = new();
 
         /// <summary>Split menu we display for the user to input the desired stack size.</summary>
         protected StackSplitMenu SplitMenu;
@@ -124,10 +124,10 @@ namespace StackSplitRedux.MenuHandlers
 
                     // Notify the handler the inventory was clicked.
                     if (this.HasInventory) {
-                        if (!this.Inventory.Initialized)
+                        if (!this.InvHandler.Initialized)
                             Log.Trace($"{pfx} Handler has inventory but inventory isn't initialized.");
                         else {
-                            if (this.Inventory.WasClicked(Game1.getMouseX(true), Game1.getMouseY(true))) {
+                            if (this.InvHandler.WasClicked(Game1.getMouseX(true), Game1.getMouseY(true))) {
                                 Log.TraceIfD($"{pfx} Jumping to InventoryClicked");
                                 return InventoryClicked();
                                 }
@@ -204,8 +204,8 @@ namespace StackSplitRedux.MenuHandlers
         protected virtual EInputHandled CancelMove() {
             CloseSplitMenu();
 
-            if (this.HasInventory && this.Inventory.Initialized)
-                this.Inventory.CancelSplit();
+            if (this.HasInventory && this.InvHandler.Initialized)
+                this.InvHandler.CancelSplit();
 
             return EInputHandled.NotHandled;
             }
@@ -229,7 +229,7 @@ namespace StackSplitRedux.MenuHandlers
                 var inventoryMenu = Mod.Reflection.GetField<IClickableMenu>(this.NativeMenu, "inventory").GetValue() as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.NativeMenu, "hoveredItem");
 
-                this.Inventory.Init(inventoryMenu, hoveredItemField);
+                this.InvHandler.Init(inventoryMenu, hoveredItemField);
                 }
             catch (Exception e) {
                 Log.Error($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler. Exception:\n{e}");

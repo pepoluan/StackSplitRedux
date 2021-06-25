@@ -18,7 +18,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="menu">The menu that was opened.</param>
         public override void Open(IClickableMenu menu) {
             base.Open(menu);
-            this.CraftingPageHandler.Open(menu, this.NativeMenu, this.Inventory);
+            this.CraftingPageHandler.Open(menu, this.NativeMenu, this.InvHandler);
             }
 
         /// <summary>Notifies the handler that its native menu was closed.</summary>

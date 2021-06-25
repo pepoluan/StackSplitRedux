@@ -14,9 +14,9 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Alternative of OpenSplitMenu which is invoked when the generic inventory handler is clicked.</summary>
         /// <returns>If the input was handled or consumed.</returns>
         protected override EInputHandled InventoryClicked() {
-            this.Inventory.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
-            if (this.Inventory.CanSplitSelectedItem()) {
-                int stackAmount = this.Inventory.GetDefaultSplitStackAmount();
+            this.InvHandler.SelectItem(Game1.getMouseX(true), Game1.getMouseY(true));
+            if (this.InvHandler.CanSplitSelectedItem()) {
+                int stackAmount = this.InvHandler.GetDefaultSplitStackAmount();
                 this.SplitMenu = new StackSplitMenu(OnStackAmountReceived, stackAmount);
                 return EInputHandled.Consumed;
                 }
@@ -33,7 +33,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="s">The user input.</param>
         protected override void OnStackAmountReceived(string s) {
             if (int.TryParse(s, out int amount)) {
-                this.Inventory.SplitSelectedItem(amount);
+                this.InvHandler.SplitSelectedItem(amount);
                 }
             base.OnStackAmountReceived(s);
             }
