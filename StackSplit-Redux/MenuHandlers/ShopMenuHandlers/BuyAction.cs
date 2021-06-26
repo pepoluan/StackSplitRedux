@@ -87,9 +87,14 @@ namespace StackSplitRedux.MenuHandlers
                 }
             }
 
+        /// <summary>
+        /// Determine how many of an item player can purchase based on player's current monies/inventories and shop's current stock
+        /// </summary>
+        /// <returns>Maximum amount purchasable, cached</returns>
         public int GetMaxPurchasable() {
             if (this._MaxPurchasable is null) {
                 var pfx = $"[{nameof(BuyAction)}.{nameof(GetMaxPurchasable)}]";
+
                 Debug.Assert(this.ClickedItem is not null);
                 Item chosen = this.ClickedItem;
                 Dictionary<ISalable, int[]> priceAndStockMap = this.NativeShopMenu.itemPriceAndStock;
