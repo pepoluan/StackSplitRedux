@@ -19,10 +19,6 @@ namespace StackSplitRedux
 
         private static StackSplit StackSplitRedux;
 
-        private readonly List<string> ConflictingMods = new() {
-            "tstaples.StackSplitX",
-            };
-
         public override void Entry(StardewModdingAPI.IModHelper helper) {
             Mod.Instance = this;
 
@@ -39,7 +35,7 @@ namespace StackSplitRedux
 
         public bool DetectConflict() {
             bool conflict = false;
-            foreach (var mID in ConflictingMods) {
+            foreach (var mID in StaticConfig.ConflictingMods) {
                 if (Mod.Registry.IsLoaded(mID)) {
                     Log.Alert($"{mID} detected!");
                     conflict = true;

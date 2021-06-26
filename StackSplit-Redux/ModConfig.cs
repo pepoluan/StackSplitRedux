@@ -22,5 +22,6 @@ namespace StackSplitRedux
         {
         internal readonly static SButton[] ModifierKeys = new[] { SButton.LeftShift, SButton.RightShift };
         internal readonly static int SplitMenuOpenDelayTicks = 2;
+        internal readonly static string[] ConflictingMods = new [] { "tstaples.StackSplitX" };
         }
     }
