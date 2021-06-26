@@ -8,7 +8,7 @@ namespace StackSplitRedux.MenuHandlers
     {
     public abstract class ShopAction : IShopAction
         {
-        /// <summary>Native shope menu.</summary>
+        /// <summary>The ShopMenu instance we're overlaying over.</summary>
         protected ShopMenu NativeShopMenu { get; private set; }
 
         /// <summary>Native inventory menu.</summary>
@@ -17,6 +17,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Currency type of the shop.</summary>
         protected int ShopCurrencyType { get; private set; }
 
+        /// <summary>Human-friendly name of the currency. Purely for logging purposes.</summary>
         protected string ShopCurrencyName {
             get => this.ShopCurrencyType switch {
                 0 => "Money",
@@ -34,6 +35,7 @@ namespace StackSplitRedux.MenuHandlers
         protected int Amount { get; set; } = 0;
 
         /// <summary>The number of items in the transaction.</summary>
+        /// <remarks>This is to satisfy IShopAction which specifies a getter-only StackAmount property</remarks>
         public int StackAmount => this.Amount;
 
 
