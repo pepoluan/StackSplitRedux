@@ -63,7 +63,7 @@ namespace StackSplitRedux.MenuHandlers
         /// </summary>
         /// <param name="amount">Number of items sold; determines the number of flying coins</param>
         /// <param name="clickLocation">Original click location (selection of item to sell).</param>
-        private void Animate(int amount, Point clickLocation) {
+        public void Animate(int amount, Point clickLocation) {
             // This procedure is copied/adapted from game code
 
             // Might want to cap this ...
