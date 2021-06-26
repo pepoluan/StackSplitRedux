@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace StackSplitRedux
+﻿namespace StackSplitRedux
     {
     internal class Mod : StardewModdingAPI.Mod
         {
