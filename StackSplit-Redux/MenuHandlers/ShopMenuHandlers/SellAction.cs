@@ -32,7 +32,7 @@ namespace StackSplitRedux.MenuHandlers
 
         /// <summary>Does the action.</summary>
         /// <param name="amount">Number of items.</param>
-        /// <param name="clickLocation">Where the player clicked.</param>
+        /// <param name="clickLocation">Where the player clicked (i.e., when selecting item to split).</param>
         public override void PerformAction(int amount, Point clickLocation) {
             amount = Math.Min(amount, this.ClickedItem.Stack);
             this.Amount = amount; // Remove if we don't need to carry this around
@@ -58,11 +58,16 @@ namespace StackSplitRedux.MenuHandlers
             Animate(amount, clickLocation);
             }
 
+        /// <summary>
+        /// Create animation of coins flying from the inventory slot to the shop moneybox
+        /// </summary>
+        /// <param name="amount">Number of items sold; determines the number of flying coins</param>
+        /// <param name="clickLocation">Original click location (selection of item to sell).</param>
         private void Animate(int amount, Point clickLocation) {
             // This procedure is copied/adapted from game code
 
             // Might want to cap this ...
-            int coins = (amount / 8) + 2;  // scale is from game code
+            int coins = (amount / 8) + 2;  // scale of "1/8" is from game code
 
             var animationsField = Mod.Reflection.GetField<List<TemporaryAnimatedSprite>>(this.NativeShopMenu, "animations");
             var animations = animationsField.GetValue();
