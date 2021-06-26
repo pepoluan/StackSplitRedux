@@ -43,7 +43,7 @@ namespace StackSplitRedux.MenuHandlers
             Log.Trace($"[{nameof(SellAction)}.{nameof(PerformAction)}] Charged player {price} for {amount} of {this.ClickedItem.Name}");
 
             // Update the stack amount/remove the item
-            var actualInventory = this.Inventory.actualInventory;
+            var actualInventory = this.InvMenu.actualInventory;
             var index = actualInventory.IndexOf(this.ClickedItem);
             if (index >= 0 && index < actualInventory.Count) {
                 int amountRemaining = this.ClickedItem.Stack - amount;
@@ -73,7 +73,7 @@ namespace StackSplitRedux.MenuHandlers
             var animationsField = Mod.Reflection.GetField<List<TemporaryAnimatedSprite>>(this.NativeShopMenu, "animations");
             var animations = animationsField.GetValue();
 
-            Vector2 snappedPosition = this.Inventory.snapToClickableComponent(clickLocation.X, clickLocation.Y);
+            Vector2 snappedPosition = this.InvMenu.snapToClickableComponent(clickLocation.X, clickLocation.Y);
 
             var anim_pos = snappedPosition + new Vector2(32f, 32f);
 
@@ -82,7 +82,7 @@ namespace StackSplitRedux.MenuHandlers
             int pos_x = this.NativeShopMenu.xPositionOnScreen;
             int pos_y = this.NativeShopMenu.yPositionOnScreen;
             int height = this.NativeShopMenu.height;
-            var endingPoint = new Vector2(pos_x - 36, pos_y + height - this.Inventory.height - 16);
+            var endingPoint = new Vector2(pos_x - 36, pos_y + height - this.InvMenu.height - 16);
 
             var accel1 = new Vector2(0f, 0.5f);
             var accel2 = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 0.5f);

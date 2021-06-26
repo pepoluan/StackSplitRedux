@@ -12,7 +12,7 @@ namespace StackSplitRedux.MenuHandlers
         protected ShopMenu NativeShopMenu { get; private set; }
 
         /// <summary>Native inventory menu.</summary>
-        protected InventoryMenu Inventory { get; private set; }
+        protected InventoryMenu InvMenu { get; private set; }
 
         /// <summary>Currency type of the shop.</summary>
         protected int ShopCurrencyType { get; private set; }
@@ -48,7 +48,7 @@ namespace StackSplitRedux.MenuHandlers
             this.ClickedItem = (Item)item;
 
             try {
-                this.Inventory = this.NativeShopMenu.inventory;
+                this.InvMenu = this.NativeShopMenu.inventory;
                 this.ShopCurrencyType = this.NativeShopMenu.currency;
                 }
             catch (Exception e) {
