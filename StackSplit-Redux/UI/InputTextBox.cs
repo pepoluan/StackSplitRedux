@@ -31,12 +31,6 @@ namespace StackSplitRedux.UI
         /// <summary>Regular text color.</summary>
         public Color TextColor { get; set; } = Game1.textColor;
 
-        /// <summary>Text color when the text is highlighted. This should contrast with HighlightColor.</summary>
-        public Color HighlightTextColor { get; set; } = Color.White;
-
-        /// <summary>The background color of the highlighted text.</summary>
-        public Color HighlightColor { get; set; } = Color.Blue;
-
         /// <summary>The text font.</summary>
         public SpriteFont Font { get; set; } = Game1.smallFont;
 
@@ -75,7 +69,7 @@ namespace StackSplitRedux.UI
 
             // Create a 1x1 texture that we will scale up to draw the highlight
             this.HighlightTexture = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
-            Color[] data = new Color[1] { this.HighlightColor };
+            Color[] data = new Color[1] { StaticConfig.HighlightColor };
             this.HighlightTexture.SetData(data);
 
             this.IsTextHighlighted = this.HighlightByDefault;
@@ -188,11 +182,11 @@ namespace StackSplitRedux.UI
             if (this.IsTextHighlighted && this.Text.Length > 0) {
                 var highlightPos = new Vector2(textPosition.X, textPosition.Y - Game1.pixelZoom);  // pixelZoom is for spacing
                 var destRect = new Rectangle((int)highlightPos.X, (int)highlightPos.Y, (int)textDimensions.X, (int)textDimensions.Y);
-                spriteBatch.Draw(this.HighlightTexture, destRect, this.HighlightColor * 0.75f);
+                spriteBatch.Draw(this.HighlightTexture, destRect, StaticConfig.HighlightColor * 0.75f);
                 }
 
             // Draw the text
-            Color textColor = this.IsTextHighlighted ? this.HighlightTextColor : this.TextColor;
+            Color textColor = this.IsTextHighlighted ? StaticConfig.HighlightTextColor : this.TextColor;
             spriteBatch.DrawString(this.Font, this.Text, textPosition, textColor);
 
             // Draw the caret

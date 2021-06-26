@@ -1,4 +1,5 @@
-﻿using StardewModdingAPI;
+﻿using Microsoft.Xna.Framework;
+using StardewModdingAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,12 @@ namespace StackSplitRedux
         internal readonly static SButton[] ModifierKeys = new[] { SButton.LeftShift, SButton.RightShift };
         internal readonly static int SplitMenuOpenDelayTicks = 2;
         internal readonly static string[] ConflictingMods = new [] { "tstaples.StackSplitX" };
+
+        /// <summary>Text color when the text is highlighted. This should contrast with HighlightColor.</summary>
+        internal readonly static Color HighlightTextColor = Color.White;
+
+        /// <summary>The background color of the highlighted text.</summary>
+        internal readonly static Color HighlightColor = Color.Blue;
+
         }
     }
