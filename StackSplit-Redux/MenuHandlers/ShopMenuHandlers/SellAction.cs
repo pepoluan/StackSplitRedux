@@ -54,36 +54,75 @@ namespace StackSplitRedux.MenuHandlers
                 }
 
             Game1.playSound("purchaseClick");
+            if (amount < 1) return;
+            Animate(amount, clickLocation);
+            }
 
-            // The animation seems to only play when we sell 1
-            if (amount == 1) {
-                // Play the sell animation
-                var animationsField = Mod.Reflection.GetField<List<TemporaryAnimatedSprite>>(this.NativeShopMenu, "animations");
-                var animations = animationsField.GetValue();
+        private void Animate(int amount, Point clickLocation) {
+            // This procedure is copied/adapted from game code
 
-                // Messy because it's a direct copy-paste from the source code
-                Vector2 value = this.Inventory.snapToClickableComponent(clickLocation.X, clickLocation.Y);
-                var startingPoint = new Point((int)value.X + 32, (int)value.Y + 32);
-                var endingPoint = Game1.dayTimeMoneyBox.position + new Vector2(96f, 196f);
+            // Might want to cap this ...
+            int coins = (amount / 8) + 2;  // scale is from game code
+
+            var animationsField = Mod.Reflection.GetField<List<TemporaryAnimatedSprite>>(this.NativeShopMenu, "animations");
+            var animations = animationsField.GetValue();
+
+            Vector2 snappedPosition = this.Inventory.snapToClickableComponent(clickLocation.X, clickLocation.Y);
+
+            var anim_pos = snappedPosition + new Vector2(32f, 32f);
+
+            var startingPoint = new Point((int)snappedPosition.X + 32, (int)snappedPosition.Y + 32);
+
+            int pos_x = this.NativeShopMenu.xPositionOnScreen;
+            int pos_y = this.NativeShopMenu.yPositionOnScreen;
+            int height = this.NativeShopMenu.height;
+            var endingPoint = new Vector2(pos_x - 36, pos_y + height - this.Inventory.height - 16);
+
+            var accel1 = new Vector2(0f, 0.5f);
+            var accel2 = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 0.5f);
+            var motion2 = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 8f);
+
+            for (int j = 0; j < coins; j++) {
                 animations.Add(
                     new TemporaryAnimatedSprite(
-                        textureName: Game1.debrisSpriteSheet.Name, 
-                        sourceRect: new Rectangle(Game1.random.Next(2) * Game1.tileSize, 256, Game1.tileSize, Game1.tileSize), 
-                        animationInterval: 9999f, 
-                        animationLength: 1, 
-                        numberOfLoops: 999, 
-                        position: value + new Vector2(32f, 32f), 
-                        flicker: false, 
+                        textureName: Game1.debrisSpriteSheetName,
+                        sourceRect: new Rectangle(Game1.random.Next(2) * 16, 64, 16, 16),
+                        animationInterval: 9999f,
+                        animationLength: 1,
+                        numberOfLoops: 999,
+                        position: anim_pos,
+                        flicker: false,
                         flipped: false
                         ) {
                             alphaFade = 0.025f,
-                            motion = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 12f),
-                            acceleration = Utility.getVelocityTowardPoint(startingPoint, endingPoint, 0.5f)
+                            motion = new Vector2(Game1.random.Next(-3, 4), -4f),
+                            acceleration = accel1,
+                            delayBeforeAnimationStart = j * 25,
+                            scale = 2f
                             }
                     );
+                animations.Add(
+                    new TemporaryAnimatedSprite(
+                        textureName: Game1.debrisSpriteSheetName,
+                        sourceRect: new Rectangle(Game1.random.Next(2) * 16, 64, 16, 16),
+                        animationInterval: 9999f,
+                        animationLength: 1,
+                        numberOfLoops: 999,
+                        position: anim_pos,
+                        flicker: false,
+                        flipped: false
+                        ) {
+                            alphaFade = 0.025f,
+                            motion = motion2,
+                            acceleration = accel2,
+                            delayBeforeAnimationStart = j * 50,
+                            scale = 4f
+                            }
+                    );
+                }  // end_for j
 
-                animationsField.SetValue(animations);
-                }
+            // Not sure if this is needed, but just to be safe
+            animationsField.SetValue(animations);
             }
 
         // TODO: verify this is correct and Item.sellToShopPrice doesn't do the same thing
