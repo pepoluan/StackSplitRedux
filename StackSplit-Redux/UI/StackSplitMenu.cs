@@ -32,9 +32,11 @@ namespace StackSplitRedux.UI
         /// <summary>Callback to execute when the text is submitted.</summary>
         private readonly TextSubmittedDelegate OnTextSubmitted;
 
+        #region Cached stuff to speed up Draw()
         private readonly Rectangle MouseRect = Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16);
         private readonly Color MouseTransparency = Color.White * Game1.mouseCursorTransparency;
         private readonly float MouseScale = Game1.pixelZoom + (Game1.dialogueButtonScale / 150f);
+        #endregion
 
         private readonly Guid GUID = Guid.NewGuid();
 
