@@ -65,6 +65,7 @@ namespace StackSplitRedux.MenuHandlers
         /// <param name="clickLocation">Original click location (selection of item to sell).</param>
         public void Animate(int amount, Point clickLocation) {
             // This procedure is copied/adapted from game code
+            // StardewValley.Menus.ShopMenu.receiveLeftClick
 
             // Might want to cap this ...
             int coins = (amount / 8) + 2;  // scale of "1/8" is from game code
