@@ -11,7 +11,7 @@ namespace StackSplitRedux.UI
     /// <summary>Custom implementation of the NameMenu input text box that has additional functionality.</summary>
     public class InputTextBox : IKeyboardSubscriber
         {
-        private const int CARET_WIDTH = 4;
+        private const int CARET_WIDTH = Game1.pixelZoom;
 
         /// <summary>Generic event.</summary>
         /// <param name="sender">Textbox the event originated from.</param>

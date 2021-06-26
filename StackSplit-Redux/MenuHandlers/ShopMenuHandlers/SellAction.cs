@@ -8,6 +8,10 @@ namespace StackSplitRedux.MenuHandlers
     {
     public class SellAction : ShopAction
         {
+        private const int SMALL_TILE = Game1.smallestTileSize;
+        private const int HALF_TILE = Game1.tileSize / 2;
+        private const int FULL_TILE = Game1.tileSize;
+
         private readonly Guid GUID = Guid.NewGuid();
 
         /// <summary>Constructs an instance.</summary>
@@ -75,9 +79,9 @@ namespace StackSplitRedux.MenuHandlers
 
             Vector2 snappedPosition = this.InvMenu.snapToClickableComponent(clickLocation.X, clickLocation.Y);
 
-            var anim_pos = snappedPosition + new Vector2(32f, 32f);
+            var anim_pos = snappedPosition + new Vector2(HALF_TILE, HALF_TILE);
 
-            var startingPoint = new Point((int)snappedPosition.X + 32, (int)snappedPosition.Y + 32);
+            var startingPoint = new Point((int)snappedPosition.X + HALF_TILE, (int)snappedPosition.Y + HALF_TILE);
 
             int pos_x = this.NativeShopMenu.xPositionOnScreen;
             int pos_y = this.NativeShopMenu.yPositionOnScreen;
@@ -92,7 +96,7 @@ namespace StackSplitRedux.MenuHandlers
                 animations.Add(
                     new TemporaryAnimatedSprite(
                         textureName: Game1.debrisSpriteSheetName,
-                        sourceRect: new Rectangle(Game1.random.Next(2) * 16, 64, 16, 16),
+                        sourceRect: new Rectangle(Game1.random.Next(2) * SMALL_TILE, FULL_TILE, SMALL_TILE, SMALL_TILE),
                         animationInterval: 9999f,
                         animationLength: 1,
                         numberOfLoops: 999,
@@ -110,7 +114,7 @@ namespace StackSplitRedux.MenuHandlers
                 animations.Add(
                     new TemporaryAnimatedSprite(
                         textureName: Game1.debrisSpriteSheetName,
-                        sourceRect: new Rectangle(Game1.random.Next(2) * 16, 64, 16, 16),
+                        sourceRect: new Rectangle(Game1.random.Next(2) * SMALL_TILE, FULL_TILE, SMALL_TILE, SMALL_TILE),
                         animationInterval: 9999f,
                         animationLength: 1,
                         numberOfLoops: 999,
