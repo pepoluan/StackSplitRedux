@@ -7,7 +7,7 @@ using StardewValley.Menus;
 namespace StackSplitRedux
     {
     public class StackSplit {
-        private const int TICKS_DELAY_OPEN = 2;
+        private static readonly int TICKS_DELAY_OPEN = StaticConfig.SplitMenuOpenDelayTicks;
 
         /// <summary>Are we subscribed to the events listened to while a handler is active.</summary>
         private bool IsSubscribed = false;

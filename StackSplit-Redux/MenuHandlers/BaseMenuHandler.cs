@@ -6,6 +6,7 @@ using StardewValley;
 using StardewValley.Menus;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace StackSplitRedux.MenuHandlers
     {
@@ -239,7 +240,8 @@ namespace StackSplitRedux.MenuHandlers
             }
 
         protected bool IsModifierKeyDown() {
-            return Mod.Input.IsDown(SButton.LeftAlt) || Mod.Input.IsDown(SButton.LeftShift);
+            return StaticConfig.ModifierKeys.Any(s => Mod.Input.IsDown(s));
+            //return Mod.Input.IsDown(SButton.LeftAlt) || Mod.Input.IsDown(SButton.LeftShift);
             }
         }
     }
