@@ -22,6 +22,6 @@
     "0.13.2": "Fix bug with determining how many items are being held",
     "0.14.0": "Automatically cap number to MaxPurchasable",
     "0.14.1": "BuyAction.CanPerformAction now uses MaxPurchasable instead of simple item.sellPrice",
-    "0.14.2": "Enable animation"
+    "0.14.2": "Enable animation, Cancel opening if game decided to do a <menu>.emergencyShutdown"
   }
 }
