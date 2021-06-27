@@ -168,6 +168,14 @@ namespace StackSplitRedux
         private void MenuHandlerOpener(object sender, UpdateTickedEventArgs e) {
             if (this.WaitOpenTicks++ >= TICKS_DELAY_OPEN) {
                 DequeueMenuHandlerOpener();
+                // Guards
+                if (this.CurrentMenuHandler is null) return;
+                if (this.MenuToHandle is null) return;
+                // Final check; it's possible game has invoked emergencyShutdown and we're left with a dangling ref
+                if (Game1.activeClickableMenu is null) {
+                    Log.Trace($"Menu {this.MenuToHandle} ran away while we're prepping!");
+                    return;
+                    }
                 this.CurrentMenuHandler.Open(this.MenuToHandle);
                 SubscribeHandlerEvents();
                 }
