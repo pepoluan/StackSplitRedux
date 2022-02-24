@@ -232,7 +232,7 @@ namespace StackSplitRedux.MenuHandlers
                 var inventoryMenu = Mod.Reflection.GetField<IClickableMenu>(this.NativeMenu, "inventory").GetValue() as InventoryMenu;
                 var hoveredItemField = Mod.Reflection.GetField<Item>(this.NativeMenu, "hoveredItem");
 
-                this.InvHandler.Init(inventoryMenu, hoveredItemField);
+                this.InvHandler.Init(inventoryMenu, hoveredItemField, null);
                 }
             catch (Exception e) {
                 Log.Error($"[{nameof(BaseMenuHandler<TMenuType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler. Exception:\n{e}");

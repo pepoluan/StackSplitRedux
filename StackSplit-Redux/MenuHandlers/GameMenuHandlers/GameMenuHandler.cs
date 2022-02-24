@@ -17,6 +17,8 @@ namespace StackSplitRedux.MenuHandlers
                 { GameMenu.craftingTab, new CraftingPageHandler() }
             };
 
+        private readonly ModdedPageHandler ModdedPageHandler = new();
+
         /// <summary>The handler for the current tab,</summary>
         private IGameMenuPageHandler CurrentPageHandler = null;
 
@@ -124,19 +126,34 @@ namespace StackSplitRedux.MenuHandlers
 
             CloseCurrentHandler();
 
-            if (!PageHandlers.TryGetValue(newTab, out IGameMenuPageHandler pageHandler)) {
-                // Please note that this is NOT AN ERROR
-                Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] No handler for tab {newTab}");
-                return false;
+            var pages = this.NativeMenu.pages;
+            var page = pages[newTab];
+
+            IGameMenuPageHandler pageHandler = null;
+
+            // Before using a built-in handler, try checking to see
+            // if there's a modded adapter handler.
+
+            if (ModdedAdapterMapping.TryGetAdapter(page.GetType(), out IModdedMenuAdapter adapter)) {
+                Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] Found a modded adapter for tab {newTab} : {page.GetType().FullName}");
+
+                pageHandler = ModdedPageHandler;
                 }
 
-            Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] Found a handler for tab {newTab} : {pageHandler}");
+            if (pageHandler == null) {
+                if (!PageHandlers.TryGetValue(newTab, out pageHandler)) {
+                    // Please note that this is NOT AN ERROR
+                    Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] No handler for tab {newTab}");
+                    return false;
+                    }
+
+                Log.TraceIfD($"[{nameof(GameMenuHandler)}.{nameof(ChangeTabs)}] Found a handler for tab {newTab} : {pageHandler}");
+                }
 
             this.PreviousTab = newTab;
             this.CurrentPageHandler = pageHandler;
 
-            var pages = this.NativeMenu.pages;
-            pageHandler.Open(this.NativeMenu, pages[newTab], this.InvHandler);
+            pageHandler.Open(this.NativeMenu, page, this.InvHandler);
 
             return true;
             }

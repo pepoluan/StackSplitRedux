@@ -36,16 +36,36 @@ namespace StackSplitRedux.MenuHandlers
         /// <summary>Currently hovered item in the inventory.</summary>
         private Item HoveredItem;
 
+        private Item HeldItem {
+            get {
+                if (this.HeldItemField == null)
+                    return Game1.player.CursorSlotItem;
+                return this.HeldItemField.GetValue();
+                }
+            set {
+                if (this.HeldItemField == null)
+                    Game1.player.CursorSlotItem = value;
+                else
+                    this.HeldItemField.SetValue(value);
+                }
+            }
+
+        /// <summary>
+        /// The held item field owned by the parent menu that contains the inventory, if the menu does not use the global held item.
+        /// </summary>
+        private IReflectedField<Item> HeldItemField;
+
         /// <summary>Null constructor that currently only invokes the base null constructor</summary>
         public InventoryHandler() {
             }
 
         /// <summary>This must be called everytime the inventory is opened/resized.</summary>
         /// <param name="inventoryMenu">Native inventory.</param>
-        public void Init(InventoryMenu inventoryMenu, IReflectedField<Item> hoveredItemField) {
+        public void Init(InventoryMenu inventoryMenu, IReflectedField<Item> hoveredItemField, IReflectedField<Item> heldItemField) {
             Debug.Assert(inventoryMenu is not null);
             this.NativeInventoryMenu = inventoryMenu;
             this.HoveredItemField = hoveredItemField;
+            this.HeldItemField = heldItemField;
 
             // Create the bounds around the inventory
             var first = this.Inventory[0].bounds;
@@ -88,7 +108,7 @@ namespace StackSplitRedux.MenuHandlers
             Debug.Assert(this.Initialized);
 
             var hoveredItem = this.HoveredItem;
-            var heldItem = Game1.player.CursorSlotItem;
+            var heldItem = this.HeldItem;
 
             if (hoveredItem is null) return false;
             if (hoveredItem.Stack <= 1) return false;
@@ -105,7 +125,7 @@ namespace StackSplitRedux.MenuHandlers
             var hoveredItemCount = this.HoveredItem.Stack;  // Grab & hold the value
             int maxStack = hoveredItem.maximumStackSize();
 
-            var heldItem = Game1.player.CursorSlotItem;
+            var heldItem = this.HeldItem;
             var heldItemCount = heldItem?.Stack ?? 0;  // Grab & hold the value
 
             // Run native click code to get the selected item
@@ -133,7 +153,7 @@ namespace StackSplitRedux.MenuHandlers
             heldItem.Stack = heldItemCount;
 
             // Update the native fields
-            Game1.player.CursorSlotItem = heldItem;
+            this.HeldItem = heldItem;
 
             // Null it out now that we're done with this operation
             this.HoveredItem = null;
