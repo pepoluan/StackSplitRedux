@@ -24,7 +24,9 @@ namespace StackSplitRedux.MenuHandlers
         public override void Open(IClickableMenu menu, IClickableMenu page, InventoryHandler inventoryHandler) {
 
             ModdedAdapterMapping.TryGetAdapter(page.GetType(), out ModdedHandler);
-            HasInventory = ModdedHandler?.GetInventoryMenu(page) != null;
+            HasInventory =
+                ModdedHandler?.GetInventoryMenu(page) != null &&
+                ModdedHandler?.GetHoverItemField(page) != null;
 
             base.Open(menu, page, inventoryHandler);
             }
