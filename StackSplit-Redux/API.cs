@@ -30,6 +30,30 @@ namespace StackSplitRedux
             return false;
             }
 
+        private static Func<IClickableMenu, O> CastFunc<T, O>(Func<T, O> func) where T : IClickableMenu where O : class {
+            return menu => menu is T tobj ? func(tobj) : null;
+        }
+
+        private static Func<IClickableMenu,A,O> CastFunc<T,A,O>(Func<T, A, O> func) where T : IClickableMenu where O : class {
+            return (menu, other) => menu is T tobj ? func(tobj, other) : null;
+            }
+
+        public bool RegisterBasicMenu<T>(
+            Func<T, InventoryMenu> inventoryGetter,
+            Func<T, IReflectedField<Item>> hoveredItemFieldGetter,
+            Func<T, IReflectedField<Item>> heldItemFieldGetter,
+            Func<T, Point, Tuple<int, Action<bool, int>>> stackChecker
+        ) where T : IClickableMenu {
+            return RegisterBasicMenu(
+                typeof(T),
+                CastFunc(inventoryGetter),
+                CastFunc(hoveredItemFieldGetter),
+                CastFunc(heldItemFieldGetter),
+                CastFunc(stackChecker)
+            );
+
+            }
+
         public bool RegisterBasicMenu(
             Type menuType,
             Func<IClickableMenu, InventoryMenu> inventoryGetter,

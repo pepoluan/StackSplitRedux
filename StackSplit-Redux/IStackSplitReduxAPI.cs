@@ -49,12 +49,18 @@ namespace StackSplitRedux
         /// );
         /// </code>
         /// </example>
-        /// <param name="menuType">The class of the menu to be handled</param>
+        /// <typeparam name="T">The class of the menu to be handled</typeparam>
         /// <param name="inventoryGetter">Function to get a menu's child InventoryMenu</param>
         /// <param name="hoveredItemFieldGetter">Function to get a menu's hovered item field</param>
         /// <param name="heldItemFieldGetter">Function to get a menu's held item field. If this is null, Game1.player.CursorSlotItem will be used instead.</param>
         /// <param name="stackChecker"></param>
-        /// <returns></returns>
+        bool RegisterBasicMenu<T>(
+            Func<T, InventoryMenu> inventoryGetter,
+            Func<T, IReflectedField<Item>> hoveredItemFieldGetter,
+            Func<T, IReflectedField<Item>> heldItemFieldGetter,
+            Func<T, Point, Tuple<int, Action<bool, int>>> stackChecker
+        ) where T : IClickableMenu;
+
         bool RegisterBasicMenu(
             Type menuType,
             Func<IClickableMenu, InventoryMenu> inventoryGetter,

@@ -3,11 +3,13 @@
 	<PropertyGroup>
 		<AssemblyName>StackSplit-Redux</AssemblyName>
 		<RootNamespace>StackSplitRedux</RootNamespace>
-		<Version>1.0.0</Version>
+		<Version>0.15.0-unofficial.1-khloeleclair</Version>
 		<TargetFramework>net5.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.0.0" />
+		<PackageReference Include="Leclair.Stardew.ModManifestBuilder" Version="1.0.3" />
 	</ItemGroup>
 </Project>
