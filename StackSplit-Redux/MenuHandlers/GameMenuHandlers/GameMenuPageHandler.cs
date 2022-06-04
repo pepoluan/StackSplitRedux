@@ -60,7 +60,7 @@ namespace StackSplitRedux.MenuHandlers
                     $"[{nameof(GameMenuPageHandler<TPageType>)}.{nameof(InitInventory)}] Initializing InventoryHandler " +
                     $"for menu = {inventoryMenu}, hovered = {hoveredItemField}"
                     );
-                this.InventoryHandler.Init(inventoryMenu, hoveredItemField);
+                this.InventoryHandler.Init(inventoryMenu, hoveredItemField, null);
                 }
             catch (Exception e) {
                 Log.Error($"[{nameof(GameMenuPageHandler<TPageType>)}.{nameof(InitInventory)}] Failed to initialize the inventory handler:\n{e}");

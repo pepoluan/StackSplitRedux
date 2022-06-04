@@ -1,12 +1,14 @@
 {
   "Name": "Stack Split Redux",
   "Author": "pepoluan, tstaples (original idea)",
-  "Version": "0.14.3",
+  "Version": "0.15.0-unofficial.1-khloeleclair",
   "Description": "Custom stack splitting, originally known as StackSplitX",
   "UniqueID": "pepoluan.StackSplitRedux",
   "EntryDll": "StackSplit-Redux.dll",
-  "MinimumApiVersion": "3.8.0",
-  "UpdateKeys": [ "Nexus:8967" ],
+  "MinimumApiVersion": "3.13.0",
+  "UpdateKeys": [
+    "Nexus:8967"
+  ],
   "Meta:Repository": "https://github.com/pepoluan/StackSplitRedux",
   "Meta:License": "MIT",
   "Meta:ChangeLog": {
@@ -23,6 +25,7 @@
     "0.14.0": "Automatically cap number to MaxPurchasable",
     "0.14.1": "BuyAction.CanPerformAction now uses MaxPurchasable instead of simple item.sellPrice",
     "0.14.2": "Enable animation",
-    "0.14.3": "React properly to <menu>.emergencyShutdown"
+    "0.14.3": "React properly to <menu>.emergencyShutdown",
+    "0.15.0": "Bugfix for crafting pages. Expand API. Update to .NET 5."
   }
 }

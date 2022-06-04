@@ -30,8 +30,9 @@ namespace StackSplitRedux.MenuHandlers
             // We need to do this explicitly because the crafting page uses a different variable name for hover item.
             var inventoryMenu = this.MenuPage.inventory;
             var hoveredItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "hoverItem");
+            var heldItemField = Mod.Reflection.GetField<Item>(this.MenuPage, "heldItem");
 
-            this.InventoryHandler.Init(inventoryMenu, hoveredItemField);
+            this.InventoryHandler.Init(inventoryMenu, hoveredItemField, heldItemField);
             }
 
         /// <summary>Tells the handler that the inventory was shift-clicked.</summary>
